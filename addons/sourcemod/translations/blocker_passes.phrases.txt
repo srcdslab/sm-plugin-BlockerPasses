@@ -1,0 +1,18 @@
+"Phrases"
+{
+	"Blocked due to lack of CT"
+	{
+		"en"		"Some passages are blocked on the map due to lack of players in the team counter terrorists!"
+		"ru"		"Некоторые проходы на карте заблокированы из-за нехватки игроков в команде контр террористов!"
+	}
+	"Block Because of the user"
+	{
+		"en"		"Some passages are blocked on the map due to lack of players!"
+		"ru"		"Некоторые проходы заблокированы из-за нехватки игроков!"
+	}
+	"UnBlock B"
+	{
+		"en"		"The passages are unlocked!"
+		"ru"		"Проходы разблокированы!"
+	}
+}
