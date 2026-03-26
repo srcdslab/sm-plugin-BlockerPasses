@@ -1,4 +1,5 @@
 #pragma semicolon 1
+#pragma newdecls required
 
 #include <sourcemod>
 #include <sdktools>
@@ -24,46 +25,47 @@
 	#define ADMIN_LEVEL		ADMFLAG_ROOT
 #endif
 
-#define PLUGIN_VERSION 	"1.2.5"
+#define PLUGIN_VERSION 	"1.3.0"
 
 const  TEAM_ALL = 1;
 const  TEAM_ONE = 2;
 const  TEAM_TWO = 3;
 
-new bool:b_late,
-	bool:g_bIsLocked;
+bool b_late;
+bool g_bIsLocked;
 	
 #include "blockerpasses/stock.sp"
 #include "blockerpasses/natives.sp"	
 
 #if UseAdminMenu
-	new Handle:h_menu,
-		Handle:h_hETitleMenu,
-		Handle:h_PropsMenu,
-		Handle:h_RoteMenu,
-		Handle:h_ColorMenu,
-		Handle:h_QuotaMenu;
+	Handle h_menu;
+	Handle h_hETitleMenu;
+	Handle h_PropsMenu;
+	Handle h_RoteMenu;
+	Handle h_ColorMenu;
+	Handle h_QuotaMenu;
 #endif
 
-new Handle:blocker_en, Handle:h_anonce, 
-	bool:b_enabled, bool:b_anonce,
-	Handle:Block_min_player, i_min_players, 
-	Handle:h_printchat, bool:g_printchat,
-	Handle:Block_accounting_teams, bool:acc_teams,
+Handle blocker_en;
+Handle h_anonce;
+	bool b_enabled; bool b_anonce;
+	Handle Block_min_player; int i_min_players;
+	Handle h_printchat; bool g_printchat;
+	Handle Block_accounting_teams; bool acc_teams;
 #if UseAdminMenu	
-	Handle:blocker_game_m, bool:b_game_m,
+	Handle blocker_game_m; bool b_game_m;
 #endif
-	Handle:blocker_autosave, bool:b_autosave;
+	Handle blocker_autosave; bool b_autosave;
 	
-new Handle:kv_list, 
-	Handle:data_props;
+Handle kv_list;
+Handle data_props;
 
-new String:s_MapName[64];
+char s_MapName[64];
 #if UseAdminMenu
-	new	String:g_sPropList[64][256];
+	char g_sPropList[64][256];
 #endif
 
-public Plugin:myinfo = 
+public Plugin myinfo =
 {
 	name = "Blocker passes",
 	author = ">>Satan<<",
@@ -71,10 +73,10 @@ public Plugin:myinfo =
 	version = PLUGIN_VERSION,
 };
 
-public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
+public APLRes AskPluginLoad2(Handle myself, bool bLate, char[] sError, int Err_max)
 {
-	b_late = late;
-	
+	Create_Natives();
+	b_late = bLate;
 	return APLRes_Success;
 }
 
@@ -185,7 +187,7 @@ public void OnPluginStart()
 	}
 	
 	#if UseAdminMenu
-		new Handle:topmenu;
+		TopMenu topmenu;
 		if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE)){
 			OnAdminMenuReady(topmenu);
 		}
@@ -200,7 +202,7 @@ public void OnMapStart()
 		LoadPropsMenu();
 	#endif
 	
-	decl String:buffer[32];
+	char buffer[32];
 	#if BetaBuild
 		Format(buffer, sizeof(buffer), "blocker_passes_beta_%s", PLUGIN_VERSION);
 	#else
@@ -215,17 +217,17 @@ public void OnMapEnd()
 	CloseHandle(kv_list);
 }
 
-public void OnPostThink(client)
+public void OnPostThink(int client)
 {
-	decl String:buffer[64], String:sBuffer[128];
+	char buffer[64], sBuffer[128];
 	
-	new entity = GetClientAimTarget2(client, false);
+	int entity = GetClientAimTarget2(client, false);
 	
 	if (entity > MaxClients){
 		GetEntPropString(entity, Prop_Data, "m_iName", buffer, sizeof(buffer));
 		if (StrContains(buffer, "BpModelId", true) != -1)
 		{
-			decl String:outBuffer[2][8];
+			char outBuffer[2][8];
 			ExplodeString(buffer, "_", outBuffer, 2, 16, false);
 			Format(sBuffer, sizeof(sBuffer), "The quota for this object: %s", outBuffer[1]);
 			PrintHudText(client, sBuffer);
@@ -237,7 +239,7 @@ void PreloadConfigs()
 {
 	GetCurrentMap(s_MapName, sizeof(s_MapName));
 	
-	new String:path[PLATFORM_MAX_PATH];
+	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), "data/blocker_passes/");
 	
 	if (!DirExists(path)){
@@ -250,7 +252,7 @@ void PreloadConfigs()
 }
 
 #if UseAdminMenu
-	public Action:CommandAdminPasses(client, args)
+	public Action CommandAdminPasses(int client, int args)
 	{
 		if (b_game_m){
 			DisplayTopMenu(h_menu, client, TopMenuPosition_LastCategory);
@@ -260,9 +262,9 @@ void PreloadConfigs()
 	}
 #endif
 
-public Action:CommandGetPoss(client, args)
+public Action CommandGetPoss(int client, int args)
 {
-	decl Float:g_fOrigin[3];
+	float g_fOrigin[3];
 	GetClientEyePosition(client, g_fOrigin);
 	
 	if(TR_DidHit(INVALID_HANDLE)){
@@ -273,37 +275,37 @@ public Action:CommandGetPoss(client, args)
 	return Plugin_Handled;
 }
 
-public OnConVarChanged(Handle:convar, const String:oldValue[], const String:newValue[])
+public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] newValue)
 {
 	if (convar == blocker_en){
-		b_enabled = bool:StringToInt(newValue);
+		b_enabled = convar.BoolValue;
 	}else if (convar == h_anonce){
-		b_anonce = bool:StringToInt(newValue);
+		b_anonce = convar.BoolValue;
 	}else if (convar == h_printchat){
-		g_printchat = bool:StringToInt(newValue);
+		g_printchat = convar.BoolValue;
 	}else if (convar == Block_min_player){
-		i_min_players = StringToInt(newValue);
+		i_min_players = convar.IntValue;
 	}else if (convar == Block_accounting_teams){
-		acc_teams = bool:StringToInt(newValue);
+		acc_teams = convar.BoolValue;
 	}else if (convar == blocker_autosave){
-		b_autosave = bool:StringToInt(newValue);	
+		b_autosave = convar.BoolValue;
 	}
 #if UseAdminMenu	
 	else if (convar == blocker_game_m){
-		b_game_m = bool:StringToInt(newValue);	
+		b_game_m = convar.BoolValue;
 	}
 #endif
 }
 
-public OnRoundStart(Handle:event, const String:name[], bool:dontBroadcast) 
+public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
 	if (!b_enabled){
-		return 0;
+		return;
 	}
 	
 	ClearArray(data_props);
 	
-	new clients = GetRealClientCount(acc_teams ? TEAM_TWO : TEAM_ALL);
+	int clients = GetRealClientCount(acc_teams ? TEAM_TWO : TEAM_ALL);
 	
 	if (clients < i_min_players){
 		
@@ -311,7 +313,7 @@ public OnRoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 		SpawnBlocks(GetRealClientCount(acc_teams ? TEAM_TWO : TEAM_ALL));
 		
 		if (!b_anonce){
-			return 0;
+			return;
 		}
 			
 		if (acc_teams){
@@ -346,7 +348,7 @@ public OnRoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 		g_bIsLocked = false;
 		
 		if (!b_anonce){
-			return 0;
+			return;
 		}
 			
 		switch(g_printchat){
@@ -363,21 +365,21 @@ public OnRoundStart(Handle:event, const String:name[], bool:dontBroadcast)
 		}
 	}
 	
-	return 0;
+	return;
 }
 
-public OnRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+public void OnRoundEnd(Event event, const char[] name, bool dontBroadcast)
 {
 	if (b_autosave){
 		SaveAllProps(0);
 	}
 	
-	return 0;
+	return;
 }
 
-public void OnEntityDestroyed(entity)
+public void OnEntityDestroyed(int entity)
 {
-	new index = -1;
+	int index = -1;
 	
 	if ((index = FindValueInArray(data_props, entity)) != -1){
 		RemoveFromArray(data_props, index);
@@ -385,7 +387,7 @@ public void OnEntityDestroyed(entity)
 }
 
 #if UseAdminMenu
-	public void OnAdminMenuReady(Handle:topmenu)
+	public void OnAdminMenuReady(Handle topmenu)
 	{
 		if (h_menu == topmenu || !b_game_m){
 			return;
@@ -393,7 +395,7 @@ public void OnEntityDestroyed(entity)
 		
 		h_menu = topmenu;
 		
-		new TopMenuObject:blocker_passes = FindTopMenuCategory(h_menu, "blocker_passes");
+		TopMenuObject blocker_passes = FindTopMenuCategory(h_menu, "blocker_passes");
 			
 		if (blocker_passes == INVALID_TOPMENUOBJECT){
 			blocker_passes = AddToTopMenu(h_menu, "blocker_passes", TopMenuObject_Category, Handle_Category, INVALID_TOPMENUOBJECT, "sm_blocker_passes", ADMIN_LEVEL);
@@ -404,7 +406,7 @@ public void OnEntityDestroyed(entity)
 		AddToTopMenu(h_menu, "sm_bp_plsettings", TopMenuObject_Item, blocker_passes_Settings, blocker_passes, "sm_bp_plsettings", ADMIN_LEVEL);
 	}
 
-	public void Handle_Category(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, String:buffer[], maxlength)
+	public void Handle_Category(Handle topmenu, TopMenuAction action, TopMenuObject object_id, int param, char[] buffer, int maxlength)
 	{
 		switch(action){
 			case TopMenuAction_DisplayTitle:{
@@ -416,7 +418,7 @@ public void OnEntityDestroyed(entity)
 		}
 	}
 
-	public void blocker_passes_Settings(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, String:buffer[], maxlength)
+	public void blocker_passes_Settings(Handle topmenu, TopMenuAction action, TopMenuObject object_id, int param, char[] buffer, int maxlength)
 	{
 		switch (action){
 			case TopMenuAction_DisplayOption :{
@@ -428,7 +430,7 @@ public void OnEntityDestroyed(entity)
 		}
 	}
 
-	public void blocker_passes_Props(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, String:buffer[], maxlength)
+	public void blocker_passes_Props(Handle topmenu, TopMenuAction action, TopMenuObject object_id, int param, char[] buffer, int maxlength)
 	{
 		switch (action){
 			case TopMenuAction_DisplayOption :{
@@ -440,7 +442,7 @@ public void OnEntityDestroyed(entity)
 		}
 	}
 
-	public void blocker_passes_Save(Handle:topmenu, TopMenuAction:action, TopMenuObject:object_id, param, String:buffer[], maxlength)
+	public void blocker_passes_Save(Handle topmenu, TopMenuAction action, TopMenuObject object_id, int param, char[] buffer, int maxlength)
 	{
 		switch (action){
 			case TopMenuAction_DisplayOption :{
@@ -452,11 +454,11 @@ public void OnEntityDestroyed(entity)
 		}
 	}
 
-	void ShowSettingsMenu(client)
+	void ShowSettingsMenu(int client)
 	{
-		decl String:buffer[64];
+		char buffer[64];
 		
-		new Handle:menu = CreateMenu(MenuSettingsHandler);
+		Menu menu = CreateMenu(MenuSettingsHandler);
 		SetMenuTitle(menu, "Settings");
 		SetMenuExitBackButton(menu, true);
 		
@@ -472,7 +474,7 @@ public void OnEntityDestroyed(entity)
 		DisplayMenu(menu, client, MENU_TIME_FOREVER);
 	}
 
-	public int MenuSettingsHandler(Handle:menu, MenuAction:action, param1, param2)
+	public int MenuSettingsHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action){
 			case MenuAction_End:{
@@ -486,7 +488,7 @@ public void OnEntityDestroyed(entity)
 			}
 			case MenuAction_Select :{
 			
-				decl String:s_Type[32];
+				char s_Type[32];
 				GetMenuItem(menu, param2, s_Type, sizeof(s_Type));
 				
 				if (StrEqual(s_Type, "Enable", false)){
@@ -504,7 +506,7 @@ public void OnEntityDestroyed(entity)
 		return 0;
 	}
 
-	public int MenuPropMenuHandler(Handle:menu, MenuAction:action, param1, param2)
+	public int MenuPropMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action){
 			case MenuAction_Cancel :{
@@ -515,7 +517,7 @@ public void OnEntityDestroyed(entity)
 			}
 			case MenuAction_Select :{
 			
-				decl String:s_Type[32];
+				char s_Type[32];
 				GetMenuItem(menu, param2, s_Type, sizeof(s_Type));
 				
 				if (StrEqual(s_Type, "PropsMenu", false)){
@@ -523,7 +525,7 @@ public void OnEntityDestroyed(entity)
 				}else if (StrEqual(s_Type, "ColorMenu", false)){
 					DisplayMenu(h_ColorMenu, param1, MENU_TIME_FOREVER);
 				}else if (StrEqual(s_Type, "QuotaMenu", false)){
-					SDKHook(param1, SDKHookType:5, OnPostThink);
+					SDKHook(param1, SDKHook_PostThinkPost, OnPostThink);
 					DisplayMenu(h_QuotaMenu, param1, MENU_TIME_FOREVER);
 				}else if (StrEqual(s_Type, "SaveProps", false)){
 					SaveAllProps(param1);
@@ -532,7 +534,7 @@ public void OnEntityDestroyed(entity)
 					g_bIsLocked = true;
 					DisplayMenu(menu, param1, MENU_TIME_FOREVER);
 				}else if (StrEqual(s_Type, "UnLockAll", false)){
-					new i, size;
+					int i, size;
 					
 					size = GetArraySize(data_props);
 					
@@ -551,7 +553,7 @@ public void OnEntityDestroyed(entity)
 		return 0;
 	}
 
-	public int PropMenuHandler(Handle:menu, MenuAction:action, param1, param2)
+	public int PropMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action){
 			case MenuAction_Cancel :{
@@ -561,12 +563,12 @@ public void OnEntityDestroyed(entity)
 			}
 			case MenuAction_Select :{
 			
-				decl String:info[64];
+				char info[64];
 				GetMenuItem(menu, param2, info, sizeof(info));
 				
-				new ent = -1, index = -1, index2 = StringToInt(info);
+				int ent = -1, index = -1, index2 = StringToInt(info);
 				
-				decl Float:g_fOrigin[3], Float:g_fAngles[3];
+				float g_fOrigin[3], g_fAngles[3];
 				
 				GetClientEyePosition(param1, g_fOrigin);
 				GetClientEyeAngles(param1, g_fAngles);
@@ -604,7 +606,7 @@ public void OnEntityDestroyed(entity)
 		return 0;
 	}
 
-	public int PropRoteMenuHandle(Handle:menu, MenuAction:action, client, param2)
+	public int PropRoteMenuHandle(Menu menu, MenuAction action, int client, int param2)
 	{
 		switch (action){
 			case MenuAction_Cancel :{
@@ -614,11 +616,11 @@ public void OnEntityDestroyed(entity)
 			}
 			case MenuAction_Select :{
 			
-				decl String:info[64];
+				char info[64];
 				GetMenuItem(menu, param2, info, sizeof(info));
 				
-				decl Float:RotateVec[3];
-				new entity = GetClientAimTarget2(client, false);
+				float RotateVec[3];
+				int entity = GetClientAimTarget2(client, false);
 				
 				if (entity > MaxClients){
 				
@@ -647,7 +649,7 @@ public void OnEntityDestroyed(entity)
 		return 0;
 	}
 
-	public int MenuPropColorHandler(Handle:menu, MenuAction:action, param1, param2)
+	public int MenuPropColorHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action){
 			case MenuAction_Cancel :{
@@ -659,10 +661,10 @@ public void OnEntityDestroyed(entity)
 			}
 			case MenuAction_Select :{
 			
-				decl String:s_Type[10];
+				char s_Type[10];
 				GetMenuItem(menu, param2, s_Type, sizeof(s_Type));
 				
-				new ent = -1;
+				int ent = -1;
 				
 				if ((ent = GetClientAimTarget(param1, false)) > MaxClients){
 					if (!strcmp(s_Type, "color1")){
@@ -691,25 +693,25 @@ public void OnEntityDestroyed(entity)
 		return 0;
 	}
 	
-	public int MenuPropQuotaHandler(Handle:menu, MenuAction:action, param1, param2)
+	public int MenuPropQuotaHandler(Handle menu, MenuAction action, int param1, int param2)
 	{
 		switch (action){
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack){
-					SDKUnhook(param1, SDKHookType:5, OnPostThink);
+					SDKUnhook(param1, SDKHook_PostThinkPost, OnPostThink);
 					DisplayMenu(h_hETitleMenu, param1, MENU_TIME_FOREVER);
 				}
 			}
 			
 			case MenuAction_Select :{
 			
-				decl String:s_Type[12];
+				char s_Type[12];
 				GetMenuItem(menu, param2, s_Type, sizeof(s_Type));
 				
-				new ent = -1, Quota;
+				int ent = -1, Quota;
 				if ((ent = GetClientAimTarget(param1, false)) > MaxClients){
 				
-					decl String:buffer[32];
+					char buffer[32];
 					GetEntPropString(ent, Prop_Data, "m_iName", buffer, sizeof(buffer));
 					
 					if (StrContains(buffer, "BpModelId", true) != -1){
@@ -720,7 +722,7 @@ public void OnEntityDestroyed(entity)
 						}
 						else{
 							
-							decl String:outBuffer[2][8];
+							char outBuffer[2][8];
 							ExplodeString(buffer, "_", outBuffer, 2, 16);
 							
 							if (StrEqual(s_Type, "++", false)){
@@ -744,10 +746,11 @@ public void OnEntityDestroyed(entity)
 	}
 #endif
 	
-void SpawnBlocks(const clients)
+void SpawnBlocks(const int clients)
 {
-	decl Float:pos[3], Float:ang[3], entity, color[4];
-	decl String:buffer[16], String:Models[256], String:s_text[256], UnLockNum;
+	float pos[3], ang[3];
+	char buffer[16], Models[256], s_text[256];
+	int entity, UnLockNum, color[4];
 	
 	if (KvGotoFirstSubKey(kv_list)){
 		do{
@@ -786,9 +789,9 @@ void SpawnBlocks(const clients)
 	KvRewind(kv_list);
 }
 
-int CreateEntity(const Float:pos[3], const Float:ang[3], const String:g_szModel[], const iMinPlayer)
+int CreateEntity(const float pos[3], const float ang[3], const char[] g_szModel, const int iMinPlayer)
 {
-	new entity = CreateEntityByName("prop_dynamic_override");
+	int entity = CreateEntityByName("prop_dynamic_override");
 	
 	if (entity == -1){
 		return -1;
@@ -798,7 +801,7 @@ int CreateEntity(const Float:pos[3], const Float:ang[3], const String:g_szModel[
 		PrecacheModel(g_szModel);
 	}
 	
-	decl String:buffer[32];
+	char buffer[32];
 	Format(buffer, sizeof(buffer), "BpModelId%d_%d", entity, iMinPlayer);
 	
 	SetEntityModel(entity, g_szModel);
@@ -813,7 +816,7 @@ int CreateEntity(const Float:pos[3], const Float:ang[3], const String:g_szModel[
 	return entity;
 }
 
-public bool Trace_FilterPlayers(entity, contentsMask, any:data)
+public bool Trace_FilterPlayers(int entity, int contentsMask, any data)
 {
 	if(entity != data && entity > MaxClients){
 		return true;
@@ -821,21 +824,21 @@ public bool Trace_FilterPlayers(entity, contentsMask, any:data)
 	return false;
 }
 
-public bool TRFilter_AimTarget(entity, mask, any:client)
+public bool TRFilter_AimTarget(int entity, int mask, int client)
 {
     return (entity != client);
 }
 
-public bool TraceEntityFilterPlayer(entity, contentsMask, any:client)
+public bool TraceEntityFilterPlayer(int entity, int contentsMask, int client)
 {
 	return ((entity > MaxClients) || !entity);
 }
 
-int GetRealClientCount(const team)
+int GetRealClientCount(const int team)
 {
-	new clients = 0;
+	int clients = 0;
 	
-	for (new i = 1; i <= MaxClients; i++){
+	for (int i = 1; i <= MaxClients; i++){
 		if (IsClientInGame(i) && IsPlayerAlive(i)){
 			if (team > TEAM_ALL) {
 				if (GetClientTeam(i) == team){
@@ -852,7 +855,7 @@ int GetRealClientCount(const team)
 	return clients;
 }
 
-void Kv_Clear(Handle:kvhandle)
+void Kv_Clear(Handle kvhandle)
 {
 	KvRewind(kvhandle);
 	
@@ -866,17 +869,20 @@ void Kv_Clear(Handle:kvhandle)
 	KvRewind(kvhandle);
 }
 
-void SaveAllProps(client)
+void SaveAllProps(int client)
 {
 	Kv_Clear(kv_list);
 	
-	new index = 1;
-	new String:buffer_modelsname[PLATFORM_MAX_PATH], String:buffer_2[64], String:colors[16], color[4], Float:pos[3], Float:ang[3], ent;
+	int ent;
+	int color[4];
+	int index = 1;
+	float pos[3], ang[3];
+	char buffer_modelsname[PLATFORM_MAX_PATH], buffer_2[64], colors[16];
 			
-	new String:path[PLATFORM_MAX_PATH];
+	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), "data/blocker_passes/%s.txt", s_MapName);
 		
-	for (new i = 0; i < GetArraySize(data_props); i++){
+	for (int i = 0; i < GetArraySize(data_props); i++){
 		
 		ent = GetArrayCell(data_props, i);
 		
@@ -898,7 +904,7 @@ void SaveAllProps(client)
 			KvSetString(kv_list, "Text", "");
 			
 			#if UseAdminMenu
-				decl String:buffer[32], String:outBuffer[2][8];
+				char buffer[32], outBuffer[2][8];
 				GetEntPropString(ent, Prop_Data, "m_iName", buffer, sizeof(buffer));
 				ExplodeString(buffer, "_", outBuffer, 2, 16, false);
 				KvSetNum(kv_list, "UnLockNum", StringToInt(outBuffer[1]));
@@ -924,12 +930,12 @@ void SaveAllProps(client)
 	#endif
 }
 #if UseAdminMenu
-	void DeleteProp(entity)
+	void DeleteProp(int entity)
 	{
-		decl String:dname[16];
+		char dname[16];
 		Format(dname, sizeof(dname), "dis_%d", entity);
 		DispatchKeyValue(entity, "targetname", dname);
-		new diss = CreateEntityByName("env_entity_dissolver");
+		int diss = CreateEntityByName("env_entity_dissolver");
 		DispatchKeyValue(diss, "dissolvetype", "3");
 		DispatchKeyValue(diss, "target", dname);
 		AcceptEntityInput(diss, "Dissolve");
@@ -943,17 +949,17 @@ void SaveAllProps(client)
 		SetMenuExitButton(h_PropsMenu, true);
 		SetMenuExitBackButton(h_PropsMenu, true);
 		
-		decl String:file[255];
-		new Handle:kv = CreateKeyValues("Props");
+		char file[255];
+		Handle kv = CreateKeyValues("Props");
 		BuildPath(Path_SM, file, sizeof(file), "data/blocker_passes/props_menu.txt");
 		FileToKeyValues(kv, file);
-		new menu_items = 0;
-		new reqmenuitems = 4;
+		int menu_items = 0;
+		int reqmenuitems = 4;
 		
 		if (KvGotoFirstSubKey(kv)){
-			new index = 0;
-			decl String:buffer[255];
-			decl String:bufferindex[5];
+			int index = 0;
+			char buffer[255];
+			char bufferindex[5];
 			do{
 				KvGetString(kv, "model", g_sPropList[index], 256);
 				
