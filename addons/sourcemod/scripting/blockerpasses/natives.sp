@@ -1,13 +1,11 @@
-public APLRes:AskPluginLoad3(Handle:myself, bool:late, String:error[], err_max)
+public void Create_Natives()
 {
 	CreateNative("sBlockerpasses_IsLocked", Native_GetBpStatusLock);
 	
 	MarkNativeAsOptional("sBlockerpasses_IsLocked");
-	
-	return;
 }
 
-public Native_GetBpStatusLock(Handle:hPlugin, iNumParams)
+public int Native_GetBpStatusLock(Handle hPlugin, int iNumParams)
 {
 	return g_bIsLocked;
 }

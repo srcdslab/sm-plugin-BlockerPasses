@@ -1,11 +1,11 @@
-stock bool:GetPlayerEye(client, Float:pos[3])
+stock bool GetPlayerEye(int client, float pos[3])
 {
-	new Float:vAngles[3], Float:vOrigin[3];
+	float vAngles[3], vOrigin[3];
 
 	GetClientEyePosition(client, vOrigin);
 	GetClientEyeAngles(client, vAngles);
 
-	new Handle:trace = TR_TraceRayFilterEx(vOrigin, vAngles, MASK_SOLID, RayType_Infinite, TraceEntityFilterPlayer, client);
+	Handle trace = TR_TraceRayFilterEx(vOrigin, vAngles, MASK_SOLID, RayType_Infinite, TraceEntityFilterPlayer, client);
 
 	if(TR_DidHit(trace)){
 		TR_GetEndPosition(pos, trace);
@@ -16,40 +16,40 @@ stock bool:GetPlayerEye(client, Float:pos[3])
 	return false;
 }
 
-stock RotateYaw( Float:angles[3], Float:degree )
+stock RotateYaw( float angles[3], float degree )
 {
-    decl Float:direction[3], Float:normal[3];
+    float direction[3], normal[3];
     GetAngleVectors( angles, direction, NULL_VECTOR, normal );
     
-    new Float:sin = Sine( degree * 0.01745328 );
-    new Float:cos = Cosine( degree * 0.01745328 );
-    new Float:a = normal[0] * sin;
-    new Float:b = normal[1] * sin;
-    new Float:c = normal[2] * sin;
-    new Float:x = direction[2] * b + direction[0] * cos - direction[1] * c;
-    new Float:y = direction[0] * c + direction[1] * cos - direction[2] * a;
-    new Float:z = direction[1] * a + direction[2] * cos - direction[0] * b;
+    float sin = Sine( degree * 0.01745328 );
+    float cos = Cosine( degree * 0.01745328 );
+    float a = normal[0] * sin;
+    float b = normal[1] * sin;
+    float c = normal[2] * sin;
+    float x = direction[2] * b + direction[0] * cos - direction[1] * c;
+    float y = direction[0] * c + direction[1] * cos - direction[2] * a;
+    float z = direction[1] * a + direction[2] * cos - direction[0] * b;
     direction[0] = x;
     direction[1] = y;
     direction[2] = z;
     
     GetVectorAngles( direction, angles );
 
-    decl Float:up[3];
+    float up[3];
     GetVectorVectors( direction, NULL_VECTOR, up );
 
-    new Float:roll = GetAngleBetweenVectors( up, normal, direction );
+    float roll = GetAngleBetweenVectors( up, normal, direction );
     angles[2] += roll;
 }
 
-stock GetClientAimTarget2(client, bool:only_clients = true)
+stock GetClientAimTarget2(int client, bool only_clients = true)
 {
-    new Float:eyeloc[3], Float:ang[3];
+    float eyeloc[3], ang[3];
     GetClientEyePosition(client, eyeloc);
     GetClientEyeAngles(client, ang);
     TR_TraceRayFilter(eyeloc, ang, MASK_SOLID, RayType_Infinite, TRFilter_AimTarget, client);
 	
-    new entity = TR_GetEntityIndex();
+    int entity = TR_GetEntityIndex();
 
     if (only_clients){
         if (entity >= 1 && entity <= MaxClients){
@@ -63,13 +63,13 @@ stock GetClientAimTarget2(client, bool:only_clients = true)
     return -1;
 }
 
-stock Float:GetAngleBetweenVectors( const Float:vector1[3], const Float:vector2[3], const Float:direction[3] )
+stock float GetAngleBetweenVectors( const float vector1[3], const float vector2[3], const float direction[3] )
 {
-    decl Float:vector1_n[3], Float:vector2_n[3], Float:direction_n[3], Float:cross[3];
+    float vector1_n[3], vector2_n[3], direction_n[3], cross[3];
     NormalizeVector( direction, direction_n );
     NormalizeVector( vector1, vector1_n );
     NormalizeVector( vector2, vector2_n );
-    new Float:degree = ArcCosine( GetVectorDotProduct( vector1_n, vector2_n ) ) * 57.29577951;
+    float degree = ArcCosine( GetVectorDotProduct( vector1_n, vector2_n ) ) * 57.29577951;
     GetVectorCrossProduct( vector1_n, vector2_n, cross );
     
     if ( GetVectorDotProduct( cross, direction_n ) < 0.0 ){
@@ -79,27 +79,39 @@ stock Float:GetAngleBetweenVectors( const Float:vector1[3], const Float:vector2[
     return degree;
 }
 
-stock MyGetEntityRenderColor(entity, color[4])
+stock void MyGetEntityRenderColor(int entity, int aColor[4])
 {
-	new offset = GetEntSendPropOffs(entity, "m_clrRender");
-	
+	static bool s_GotConfig = false;
+	static char s_sProp[32];
+
+	if (!s_GotConfig)
+	{
+		Handle GameConf = LoadGameConfigFile("core.games");
+		bool Exists = GameConfGetKeyValue(GameConf, "m_clrRender", s_sProp, sizeof(s_sProp));
+		CloseHandle(GameConf);
+
+		if (!Exists)
+			strcopy(s_sProp, sizeof(s_sProp), "m_clrRender");
+
+		s_GotConfig = true;
+	}
+
+	int offset = GetEntSendPropOffs(entity, s_sProp);
 	if (offset <= 0){
 		ThrowError("GetEntityColor not supported by this mod");
 	}
-	
-	color[0] = GetEntData(entity, offset, 1);
-	color[1] = GetEntData(entity, offset + 1, 1);
-	color[2] = GetEntData(entity, offset + 2, 1);
-	color[3] = GetEntData(entity, offset + 3, 1);
+
+	for (int i = 0; i < 4; i++)
+		aColor[i] = GetEntData(entity, offset + i, 1) & 0xFF;
 }
 
-stock SetEntityColor(entity, color[4] = {-1, ...})
+stock SetEntityColor(int entity, int color[4] = {-1, ...})
 {
-	new dummy_color[4]; 
+	int dummy_color[4];
 	
 	MyGetEntityRenderColor(entity, dummy_color);
 	
-	for (new i = 0; i <= 3; i++){
+	for (int i = 0; i <= 3; i++){
 		if (color[i] != -1){
 			dummy_color[i] = color[i];
 		}
@@ -109,10 +121,10 @@ stock SetEntityColor(entity, color[4] = {-1, ...})
 	SetEntityRenderMode(entity, RENDER_TRANSCOLOR);
 }
 
-stock bool:StringToColor(const String:str[], color[4], defvalue = -1)
+stock bool StringToColor(const char[] str, int color[4], int defvalue = -1)
 {
-	new bool:result = false;
-	new String:Splitter[4][64];
+	bool result = false;
+	char Splitter[4][64];
 	if (ExplodeString(str, " ", Splitter, sizeof(Splitter), sizeof(Splitter[])) == 4 && String_IsNumeric(Splitter[0]) && String_IsNumeric(Splitter[1]) && String_IsNumeric(Splitter[2]) && String_IsNumeric(Splitter[3])){
 		color[0] = StringToInt(Splitter[0]);
 		color[1] = StringToInt(Splitter[1]);
@@ -128,15 +140,15 @@ stock bool:StringToColor(const String:str[], color[4], defvalue = -1)
 	return result;
 }
 
-stock ColorToString(const color[4], String:buffer[], size)
+stock ColorToString(const int color[4], char[] buffer, int size)
 {
 	Format(buffer, size, "%d %d %d %d", color[0], color[1], color[2], color[3]);
 }
 
-stock bool:String_IsNumeric(const String:str[])
+stock bool String_IsNumeric(const char[] str)
 {
-	new x=0;
-	new numbersFound=0;
+	int x = 0;
+	int numbersFound = 0;
 
 	if (str[x] == '+' || str[x] == '-'){
 		x++;
@@ -156,9 +168,9 @@ stock bool:String_IsNumeric(const String:str[])
 	return true;
 }
 
-stock PrintHudText(client, String:text[])
+stock PrintHudText(int client, const char[] text)
 {
-	new Handle:hBuffer = StartMessageOne("KeyHintText", client);
+	Handle hBuffer = StartMessageOne("KeyHintText", client);
 	BfWriteByte(hBuffer, 1); 
 	BfWriteString(hBuffer, text); 
 	EndMessage();
