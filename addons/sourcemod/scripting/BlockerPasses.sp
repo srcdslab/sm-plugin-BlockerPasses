@@ -207,7 +207,7 @@ public void OnMapStart()
 
 public void OnMapEnd()
 {
-	CloseHandle(g_kv);
+	delete g_kv;
 }
 
 public void OnPostThink(int client)
@@ -479,7 +479,7 @@ public void OnEntityDestroyed(int entity)
 	{
 		switch (action) {
 			case MenuAction_End:{
-				CloseHandle(menu);
+				delete menu;
 			}
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
@@ -492,11 +492,11 @@ public void OnEntityDestroyed(int entity)
 				char sType[32];
 				menu.GetItem(param2, sType, sizeof(sType));
 
-				if (StrEqual(sType, "Enable", false)) {
+				if (strcmp(sType, "Enable", false) == 0) {
 					g_bEnabled = !g_bEnabled;
-				} else if (StrEqual(sType, "Acc_Team", false)) {
+				} else if (strcmp(sType, "Acc_Team", false) == 0) {
 					g_bAccTeams = !g_bAccTeams;
-				} else if (StrEqual(sType, "Anonce", false)) {
+				} else if (strcmp(sType, "Anonce", false) == 0) {
 					g_bAnnounce = !g_bAnnounce;
 				}
 
@@ -521,20 +521,20 @@ public void OnEntityDestroyed(int entity)
 				char sType[32];
 				menu.GetItem(param2, sType, sizeof(sType));
 
-				if (StrEqual(sType, "PropsMenu", false)) {
+				if (strcmp(sType, "PropsMenu", false) == 0) {
 					g_hPropsMenu.Display(param1, MENU_TIME_FOREVER);
-				} else if (StrEqual(sType, "ColorMenu", false)) {
+				} else if (strcmp(sType, "ColorMenu", false) == 0) {
 					g_hColorMenu.Display(param1, MENU_TIME_FOREVER);
-				} else if (StrEqual(sType, "QuotaMenu", false)) {
+				} else if (strcmp(sType, "QuotaMenu", false) == 0) {
 					SDKHook(param1, SDKHook_PostThinkPost, OnPostThink);
 					g_hQuotaMenu.Display(param1, MENU_TIME_FOREVER);
-				} else if (StrEqual(sType, "SaveProps", false)) {
+				} else if (strcmp(sType, "SaveProps", false) == 0) {
 					SaveAllProps(param1);
-				} else if (StrEqual(sType, "LockAll", false)) {
+				} else if (strcmp(sType, "LockAll", false) == 0) {
 					SpawnBlocks(0);
 					g_bIsLocked = true;
 					menu.Display(param1, MENU_TIME_FOREVER);
-				} else if (StrEqual(sType, "UnLockAll", false)) {
+				} else if (strcmp(sType, "UnLockAll", false) == 0) {
 					int i, size;
 
 					size = GetArraySize(g_aDataProps);
@@ -627,17 +627,17 @@ public void OnEntityDestroyed(int entity)
 
 					GetEntPropVector(entity, Prop_Send, "m_angRotation", RotateVec);
 
-					if (StrEqual(info, "RotateX+45")) {
+					if (strcmp(info, "RotateX+45") == 0) {
 						RotateVec[0] = RotateVec[0] + 45.0;
-					} else if (StrEqual(info, "RotateX-45")) {
+					} else if (strcmp(info, "RotateX-45") == 0) {
 						RotateVec[0] = RotateVec[0] - 45.0;
-					} else if (StrEqual(info, "RotateY+45")) {
+					} else if (strcmp(info, "RotateY+45") == 0) {
 						RotateVec[1] = RotateVec[1] + 45.0;
-					} else if (StrEqual(info, "RotateY-45")) {
+					} else if (strcmp(info, "RotateY-45") == 0) {
 						RotateVec[1] = RotateVec[1] - 45.0;
-					} else if (StrEqual(info, "RotateZ+45")) {
+					} else if (strcmp(info, "RotateZ+45") == 0) {
 						RotateVec[2] = RotateVec[2] + 45.0;
-					} else if (StrEqual(info, "RotateZ-45")) {
+					} else if (strcmp(info, "RotateZ-45") == 0) {
 						RotateVec[2] = RotateVec[2] - 45.0;
 					}
 
@@ -716,7 +716,7 @@ public void OnEntityDestroyed(int entity)
 					GetEntPropString(ent, Prop_Data, "m_iName", buffer, sizeof(buffer));
 
 					if (StrContains(buffer, "BpModelId", true) != -1) {
-						if (!StrEqual(sType, "++", false) && !StrEqual(sType, "--", false)) {
+						if (strcmp(sType, "++", false) != 0 && strcmp(sType, "--", false) != 0) {
 							Quota = StringToInt(sType);
 							Format(buffer, sizeof(buffer), "BpModelId%d_%d", ent, Quota);
 							DispatchKeyValue(ent, "targetname", buffer);
@@ -726,10 +726,10 @@ public void OnEntityDestroyed(int entity)
 							char outBuffer[2][8];
 							ExplodeString(buffer, "_", outBuffer, 2, 16);
 
-							if (StrEqual(sType, "++", false)) {
+							if (strcmp(sType, "++", false) == 0) {
 								Quota = StringToInt(outBuffer[1]) + 1;
 							}
-							else if (StrEqual(sType, "--", false)) {
+							else if (strcmp(sType, "--", false) == 0) {
 								Quota = StringToInt(outBuffer[1]) - 1;
 							}
 
@@ -753,15 +753,15 @@ void SpawnBlocks(const int clients)
 	char buffer[16], Models[256], s_text[256];
 	int entity, UnLockNum, color[4];
 
-	if (KvGotoFirstSubKey(g_kv)) {
+	if (g_kv.GotoFirstSubKey()) {
 		do{
-			KvGetVector(g_kv, "Position", pos);
-			KvGetVector(g_kv, "Angles", ang);
-			KvGetString(g_kv, "Model", Models, sizeof(Models));
-			KvGetString(g_kv, "Text", s_text, sizeof(s_text));
-			KvGetString(g_kv, "Colors", buffer, sizeof(buffer));
+			g_kv.GetVector("Position", pos);
+			g_kv.GetVector("Angles", ang);
+			g_kv.GetString("Model", Models, sizeof(Models));
+			g_kv.GetString("Text", s_text, sizeof(s_text));
+			g_kv.GetString("Colors", buffer, sizeof(buffer));
 
-			UnLockNum = KvGetNum(g_kv, "UnLockNum", g_biMinPlayers);
+			UnLockNum = g_kv.GetNum("UnLockNum", g_biMinPlayers);
 
 			StringToColor(buffer, color);
 
@@ -787,7 +787,7 @@ void SpawnBlocks(const int clients)
 		} while (KvGotoNextKey(g_kv));
 	}
 
-	KvRewind(g_kv);
+	g_kv.Rewind();
 }
 
 int CreateEntity(const float pos[3], const float ang[3], const char[] g_szModel, const int iMinPlayer)
@@ -856,18 +856,18 @@ int GetRealClientCount(const int team)
 	return clients;
 }
 
-void Kv_Clear(Handle kvhandle)
+void Kv_Clear(KeyValues kvhandle)
 {
-	KvRewind(kvhandle);
+	kvhandle.Rewind();
 
-	if (KvGotoFirstSubKey(kvhandle)) {
+	if (kvhandle.GotoFirstSubKey()) {
 		do{
-			KvDeleteThis(kvhandle);
-			KvRewind(kvhandle);
+			kvhandle.DeleteThis();
+			kvhandle.Rewind();
 		}
-		while (KvGotoFirstSubKey(kvhandle));
+		while (kvhandle.GotoFirstSubKey());
 	}
-	KvRewind(kvhandle);
+	kvhandle.Rewind();
 }
 
 void SaveAllProps(int client)
@@ -883,9 +883,10 @@ void SaveAllProps(int client)
 	char path[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, path, sizeof(path), "data/blocker_passes/%s.txt", s_sMapName);
 
-	for (int i = 0; i < GetArraySize(g_aDataProps); i++) {
+	for (int i = 0; i < g_aDataProps.Length; i++) {
 
-		ent = GetArrayCell(g_aDataProps, i);
+		// ent = GetArrayCell(g_aDataProps, i);
+		ent = g_aDataProps.Get(i);
 
 		if (ent > MaxClients && IsValidEdict(ent)) {
 
@@ -896,24 +897,24 @@ void SaveAllProps(int client)
 			ColorToString(color, colors, sizeof(colors));
 
 			IntToString(index, buffer_2, sizeof(buffer_2));
-			KvJumpToKey(g_kv, buffer_2, true);
+			g_kv.JumpToKey(buffer_2, true);
 
-			KvSetVector(g_kv, "Position", pos);
-			KvSetVector(g_kv, "Angles", ang);
-			KvSetString(g_kv, "Model", buffer_modelsname);
-			KvSetString(g_kv, "colors", colors);
-			KvSetString(g_kv, "Text", "");
+			g_kv.SetVector("Position", pos);
+			g_kv.SetVector("Angles", ang);
+			g_kv.SetString("Model", buffer_modelsname);
+			g_kv.SetString("colors", colors);
+			g_kv.SetString("Text", "");
 
 			#if UseAdminMenu
 				char buffer[32], outBuffer[2][8];
 				GetEntPropString(ent, Prop_Data, "m_iName", buffer, sizeof(buffer));
 				ExplodeString(buffer, "_", outBuffer, 2, 16, false);
-				KvSetNum(g_kv, "UnLockNum", StringToInt(outBuffer[1]));
+				g_kv.SetNum("UnLockNum", StringToInt(outBuffer[1]));
 			#else
-				KvSetNum(g_kv, "UnLockNum", g_biMinPlayers);
+				g_kv.SetNum("UnLockNum", g_biMinPlayers);
 			#endif
 
-			KvRewind(g_kv);
+			g_kv.Rewind();
 
 			index++;
 		}
@@ -961,16 +962,16 @@ void SaveAllProps(int client)
 		int menu_items = 0;
 		int reqmenuitems = 4;
 
-		if (KvGotoFirstSubKey(kv)) {
+		if (kv.GotoFirstSubKey()) {
 			int index = 0;
 			char buffer[255];
 			char bufferindex[5];
 			do{
-				KvGetString(kv, "model", g_sPropList[index], 256);
+				kv.GetString("model", g_sPropList[index], sizeof(g_sPropList[index]));
 
 				PrecacheModel(g_sPropList[index]);
 
-				KvGetSectionName(kv, buffer, sizeof(buffer));
+				kv.GetSectionName(buffer, sizeof(buffer));
 				IntToString(index, bufferindex, sizeof(bufferindex));
 				g_hPropsMenu.AddItem(bufferindex, buffer);
 				index++;
@@ -983,8 +984,8 @@ void SaveAllProps(int client)
 					g_hPropsMenu.AddItem("remove", 	"[Remove Prop]");
 				}
 			}
-			while (KvGotoNextKey(kv));
+			while (kv.GotoNextKey());
 		}
-		CloseHandle(kv);
+		delete kv;
 	}
 #endif

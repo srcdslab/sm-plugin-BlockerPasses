@@ -9,10 +9,10 @@ stock bool GetPlayerEye(int client, float pos[3])
 
 	if (TR_DidHit(trace)) {
 		TR_GetEndPosition(pos, trace);
-		CloseHandle(trace);
+		delete trace;
 		return true;
 	}
-	CloseHandle(trace);
+	delete trace;
 	return false;
 }
 
@@ -86,9 +86,9 @@ stock void MyGetEntityRenderColor(int entity, int aColor[4])
 
 	if (!bGotConfig)
 	{
-		Handle GameConf = LoadGameConfigFile("core.games");
-		bool Exists = GameConfGetKeyValue(GameConf, "m_clrRender", sProp, sizeof(sProp));
-		CloseHandle(GameConf);
+		GameData GameConf = new GameData("core.games");
+		bool Exists = GameConf.GetKeyValue("m_clrRender", sProp, sizeof(sProp));
+		delete GameConf;
 
 		if (!Exists)
 			strcopy(sProp, sizeof(sProp), "m_clrRender");
