@@ -140,40 +140,40 @@ public void OnPluginStart()
 	#endif
 
 	g_cvEnabled = CreateConVar("sm_bp_enable", 					"1", 	"1|0 Enable / Disable the plugin", _, true, 0.0, true, 1.0);
-	g_bEnabled = GetConVarBool(g_cvEnabled);
+	g_bEnabled = g_cvEnabled.BoolValue;
 	g_cvEnabled.AddChangeHook(OnConVarChanged);
 
 	g_cvAnnounce = CreateConVar("sm_bp_anonce", 					"1", 	"1|0 Enable / Disable message about the status of the lock plug", FCVAR_NOTIFY, true, 0.0, true, 1.0);
-	g_bAnnounce = GetConVarBool(g_cvAnnounce);
+	g_bAnnounce = g_cvAnnounce.BoolValue;
 	g_cvAnnounce.AddChangeHook(OnConVarChanged);
 
 	g_cvDisplayMode = CreateConVar("sm_bp_amode", 					"1", 	"Message Display Type (0 - HUD, 1 - Chat)", _, true, 0.0, true, 1.0);
-	g_bPrintInChat = GetConVarBool(g_cvDisplayMode);
+	g_bPrintInChat = g_cvDisplayMode.BoolValue;
 	g_cvDisplayMode.AddChangeHook(OnConVarChanged);
 
 
 	g_cvMinPlayer = CreateConVar("sm_bp_minplayer", 			"10", 	"The minimum number of players for the machine. removal of all processes, blocking passage", FCVAR_NOTIFY, true, 0.0, true, 64.0);
-	g_biMinPlayers = GetConVarInt(g_cvMinPlayer);
+	g_biMinPlayers = g_cvMinPlayer.IntValue;
 	g_cvMinPlayer.AddChangeHook(OnConVarChanged);
 
 	g_cvBlockAccountingTeam = CreateConVar("sm_bp_onlyct", 		"0", 	"1|0 Enable / Disable counting only the players of the CT team for the decision on blocking", FCVAR_NOTIFY, true, 0.0, true, 1.0);
-	g_bAccTeams = GetConVarBool(g_cvBlockAccountingTeam);
+	g_bAccTeams = g_cvBlockAccountingTeam.BoolValue;
 	g_cvBlockAccountingTeam.AddChangeHook(OnConVarChanged);
 
 	g_cvAutoSave = CreateConVar("sm_bp_autosave", 			"0", 	"1|0 Enable / Disable automatic saving props at the end of each round,", FCVAR_NOTIFY, true, 0.0, true, 1.0);
-	g_bAutosave = GetConVarBool(g_cvAutoSave);
+	g_bAutosave = g_cvAutoSave.BoolValue;
 	g_cvAutoSave.AddChangeHook(OnConVarChanged);
 
 	#if UseAdminMenu
 		g_cvUseAdminMenu = CreateConVar("sm_bp_enableadmmenu",	"1",	"1|0 Enable / Disable the plugin management menu in the game",  _, true, 0.0, true, 1.0);
-		g_bUseAdminMenu = GetConVarBool(g_cvUseAdminMenu);
+		g_bUseAdminMenu = g_cvUseAdminMenu.BoolValue;
 		g_cvUseAdminMenu.AddChangeHook(OnConVarChanged);
 	#endif
 
 	AutoExecConfig(true);
 	LoadTranslations("blocker_passes.phrases");
 
-	g_aDataProps = CreateArray();
+	g_aDataProps = new ArrayList();
 
 	HookEvent("round_start", OnRoundStart);
 	HookEvent("round_end", OnRoundEnd);
@@ -241,14 +241,14 @@ void PreloadConfigs()
 
 	g_kv = CreateKeyValues("blocker_passes");
 	BuildPath(Path_SM, path, sizeof(path), "data/blocker_passes/%s.txt", s_sMapName);
-	FileToKeyValues(g_kv, path);
+	g_kv.ImportFromFile(path);
 }
 
 #if UseAdminMenu
 	public Action CommandAdminPasses(int client, int args)
 	{
 		if (g_bUseAdminMenu) {
-			DisplayTopMenu(g_hTopMenu, client, TopMenuPosition_LastCategory);
+			g_hTopMenu.Display(client, TopMenuPosition_LastCategory);
 		}
 
 		return Plugin_Handled;
@@ -296,7 +296,7 @@ public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
 		return;
 	}
 
-	ClearArray(g_aDataProps);
+	g_aDataProps.Clear();
 
 	int clients = GetRealClientCount(g_bAccTeams ? TEAM_TWO : TEAM_ALL);
 
@@ -375,8 +375,8 @@ public void OnEntityDestroyed(int entity)
 {
 	int index = -1;
 
-	if ((index = FindValueInArray(g_aDataProps, entity)) != -1) {
-		RemoveFromArray(g_aDataProps, index);
+	if ((index = g_aDataProps.FindValue(entity)) != -1) {
+		g_aDataProps.Erase(index);
 	}
 }
 
@@ -484,7 +484,7 @@ public void OnEntityDestroyed(int entity)
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
 					if (g_hTopMenu != INVALID_HANDLE)
-						DisplayTopMenu(g_hTopMenu, param1, TopMenuPosition_LastCategory);
+						g_hTopMenu.Display(param1, TopMenuPosition_LastCategory);
 				}
 			}
 			case MenuAction_Select :{
@@ -513,7 +513,7 @@ public void OnEntityDestroyed(int entity)
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
 					if (g_hTopMenu != INVALID_HANDLE)
-						DisplayTopMenu(g_hTopMenu, param1, TopMenuPosition_LastCategory);
+						g_hTopMenu.Display(param1, TopMenuPosition_LastCategory);
 				}
 			}
 			case MenuAction_Select :{
@@ -535,12 +535,10 @@ public void OnEntityDestroyed(int entity)
 					g_bIsLocked = true;
 					menu.Display(param1, MENU_TIME_FOREVER);
 				} else if (strcmp(sType, "UnLockAll", false) == 0) {
-					int i, size;
+					int i;
 
-					size = GetArraySize(g_aDataProps);
-
-					while (i < size) {
-						DeleteProp(GetArrayCell(g_aDataProps, i));
+					while (i < g_aDataProps.Length) {
+						DeleteProp(g_aDataProps.Get(i));
 						i++;
 					}
 					g_bIsLocked = false;
@@ -587,8 +585,8 @@ public void OnEntityDestroyed(int entity)
 						return 0;
 					} else if (!strcmp(info, "remove")) {
 						if ((ent = GetClientAimTarget(param1, false)) > MaxClients) {
-							if ((index = FindValueInArray(g_aDataProps, ent)) != -1) {
-								RemoveFromArray(g_aDataProps, index);
+							if ((index = g_aDataProps.FindValue(ent)) != -1) {
+								g_aDataProps.Erase(index);
 								DeleteProp(ent);
 								PrintHintText(param1, "Prop removed!");
 							}
@@ -812,7 +810,7 @@ int CreateEntity(const float pos[3], const float ang[3], const char[] g_szModel,
 
 	TeleportEntity(entity, pos, ang, NULL_VECTOR);
 
-	PushArrayCell(g_aDataProps, entity);
+	g_aDataProps.Push(entity);
 
 	return entity;
 }
@@ -885,7 +883,6 @@ void SaveAllProps(int client)
 
 	for (int i = 0; i < g_aDataProps.Length; i++) {
 
-		// ent = GetArrayCell(g_aDataProps, i);
 		ent = g_aDataProps.Get(i);
 
 		if (ent > MaxClients && IsValidEdict(ent)) {
@@ -928,7 +925,7 @@ void SaveAllProps(int client)
 	PrintHintText(client, "Positions\nSuccessfully saved.\nTotal %d Props!", index - 1);
 
 	#if UseAdminMenu
-		DisplayTopMenu(g_hTopMenu, client, TopMenuPosition_LastCategory);
+		g_hTopMenu.Display(client, TopMenuPosition_LastCategory);
 	#endif
 }
 #if UseAdminMenu
@@ -958,7 +955,7 @@ void SaveAllProps(int client)
 		char file[255];
 		KeyValues kv = CreateKeyValues("Props");
 		BuildPath(Path_SM, file, sizeof(file), "data/blocker_passes/props_menu.txt");
-		FileToKeyValues(kv, file);
+		kv.ImportFromFile(file);
 		int menu_items = 0;
 		int reqmenuitems = 4;
 
