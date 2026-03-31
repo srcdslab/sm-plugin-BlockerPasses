@@ -967,7 +967,7 @@ void SaveAllProps(int client)
 			char buffer[255];
 			char bufferindex[5];
 			do{
-				kv.GetString("model", g_sPropList[index], sizeof(g_sPropList[index]));
+				kv.GetString("model", g_sPropList[index], sizeof(g_sPropList[]));
 
 				PrecacheModel(g_sPropList[index]);
 
