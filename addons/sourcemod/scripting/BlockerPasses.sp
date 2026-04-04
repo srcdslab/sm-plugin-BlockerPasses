@@ -70,7 +70,7 @@ public Plugin myinfo =
 	name = "Blocker passes",
 	author = ">>Satan<<",
 	description = "Blocker passes on maps",
-	version = "1.3.0",
+	version = "1.4.0",
 };
 
 public APLRes AskPluginLoad2(Handle myself, bool bLate, char[] sError, int Err_max)
