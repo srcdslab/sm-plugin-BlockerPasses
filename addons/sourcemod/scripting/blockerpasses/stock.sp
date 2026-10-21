@@ -171,7 +171,8 @@ stock bool String_IsNumeric(const char[] str)
 stock PrintHudText(int client, const char[] text)
 {
 	Handle hBuffer = StartMessageOne("KeyHintText", client);
-	BfWriteByte(hBuffer, 1);
-	BfWriteString(hBuffer, text);
+	BfWrite bf = UserMessageToBfWrite(hBuffer);
+	bf.WriteByte(1);
+	bf.WriteString(text);
 	EndMessage();
 }

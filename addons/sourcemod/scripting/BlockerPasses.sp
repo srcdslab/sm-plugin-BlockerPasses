@@ -70,7 +70,7 @@ public Plugin myinfo =
 	name = "Blocker passes",
 	author = ">>Satan<<",
 	description = "Blocker passes on maps",
-	version = "1.4.0",
+	version = "1.4.1",
 };
 
 public APLRes AskPluginLoad2(Handle myself, bool bLate, char[] sError, int Err_max)
@@ -190,7 +190,7 @@ public void OnPluginStart()
 
 	#if UseAdminMenu
 		TopMenu topmenu;
-		if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != INVALID_HANDLE)) {
+		if (LibraryExists("adminmenu") && ((topmenu = GetAdminTopMenu()) != null)) {
 			OnAdminMenuReady(topmenu);
 		}
 	#endif
@@ -239,7 +239,7 @@ void PreloadConfigs()
 		CreateDirectory(path, 511);
 	}
 
-	g_kv = CreateKeyValues("blocker_passes");
+	g_kv = new KeyValues("blocker_passes");
 	BuildPath(Path_SM, path, sizeof(path), "data/blocker_passes/%s.txt", s_sMapName);
 	g_kv.ImportFromFile(path);
 }
@@ -260,8 +260,8 @@ public Action CommandGetPoss(int client, int args)
 	float g_fOrigin[3];
 	GetClientEyePosition(client, g_fOrigin);
 
-	if (TR_DidHit(INVALID_HANDLE)) {
-		TR_GetEndPosition(g_fOrigin, INVALID_HANDLE);
+	if (TR_DidHit(null)) {
+		TR_GetEndPosition(g_fOrigin, null);
 		PrintToChat(client, "\x04[SM]\x04 Position: \x01%-.1f\x04; \x01%-.1f\x04; \x01%-.1f\x04.", g_fOrigin[0], g_fOrigin[1], g_fOrigin[2]);
 	}
 
@@ -399,7 +399,7 @@ public void OnEntityDestroyed(int entity)
 		TopMenuObject blocker_passes = g_hTopMenu.FindCategory("blocker_passes");
 
 		if (blocker_passes == INVALID_TOPMENUOBJECT) {
-			blocker_passes = AddToTopMenu(g_hTopMenu, "blocker_passes", TopMenuObject_Category, Handle_Category, INVALID_TOPMENUOBJECT, "sm_blocker_passes", ADMIN_LEVEL);
+			blocker_passes = g_hTopMenu.AddCategory("blocker_passes", Handle_Category, "sm_blocker_passes", ADMIN_LEVEL);
 		}
 
 		g_hTopMenu.AddItem("sm_bp_save", blocker_passes_Save, blocker_passes, "sm_bp_save", ADMIN_LEVEL);
@@ -483,7 +483,7 @@ public void OnEntityDestroyed(int entity)
 			}
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
-					if (g_hTopMenu != INVALID_HANDLE)
+					if (g_hTopMenu != null)
 						g_hTopMenu.Display(param1, TopMenuPosition_LastCategory);
 				}
 			}
@@ -512,7 +512,7 @@ public void OnEntityDestroyed(int entity)
 		switch (action) {
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
-					if (g_hTopMenu != INVALID_HANDLE)
+					if (g_hTopMenu != null)
 						g_hTopMenu.Display(param1, TopMenuPosition_LastCategory);
 				}
 			}
@@ -573,10 +573,10 @@ public void OnEntityDestroyed(int entity)
 				GetClientEyeAngles(param1, g_fAngles);
 				TR_TraceRayFilter(g_fOrigin, g_fAngles, MASK_SOLID, RayType_Infinite, Trace_FilterPlayers, param1);
 
-				if (TR_DidHit(INVALID_HANDLE)) {
+				if (TR_DidHit(null)) {
 
-					TR_GetEndPosition(g_fOrigin, INVALID_HANDLE);
-					TR_GetPlaneNormal(INVALID_HANDLE, g_fAngles);
+					TR_GetEndPosition(g_fOrigin, null);
+					TR_GetPlaneNormal(null, g_fAngles);
 					GetVectorAngles(g_fAngles, g_fAngles);
 					g_fAngles[0] += 90.0;
 
@@ -653,7 +653,7 @@ public void OnEntityDestroyed(int entity)
 		switch (action) {
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
-					if (g_hTopMenu != INVALID_HANDLE) {
+					if (g_hTopMenu != null) {
 						g_hETitleMenu.Display(param1, MENU_TIME_FOREVER);
 					}
 				}
@@ -782,7 +782,7 @@ void SpawnBlocks(const int clients)
 					SetEntityColor(entity, color);
 				}
 			}
-		} while (KvGotoNextKey(g_kv));
+		} while (g_kv.GotoNextKey());
 	}
 
 	g_kv.Rewind();
@@ -917,7 +917,7 @@ void SaveAllProps(int client)
 		}
 	}
 
-	KeyValuesToFile(g_kv, path);
+	g_kv.ExportToFile(path);
 
 	if (client == 0) {
 		return;
@@ -953,7 +953,7 @@ void SaveAllProps(int client)
 		g_hPropsMenu.ExitBackButton = true;
 
 		char file[255];
-		KeyValues kv = CreateKeyValues("Props");
+		KeyValues kv = new KeyValues("Props");
 		BuildPath(Path_SM, file, sizeof(file), "data/blocker_passes/props_menu.txt");
 		kv.ImportFromFile(file);
 		int menu_items = 0;
