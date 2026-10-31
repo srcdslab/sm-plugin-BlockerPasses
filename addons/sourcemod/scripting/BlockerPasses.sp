@@ -70,7 +70,7 @@ public Plugin myinfo =
 	name = "Blocker passes",
 	author = ">>Satan<<",
 	description = "Blocker passes on maps",
-	version = "1.4.1",
+	version = "1.4.2",
 };
 
 public APLRes AskPluginLoad2(Handle myself, bool bLate, char[] sError, int Err_max)
@@ -325,7 +325,7 @@ public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
 		} else {
 			switch (g_bPrintInChat) {
 				case false:{
-					PrintCenterTextAll("%t", "Blocked due to lack of CT");
+					PrintCenterTextAll("%t", "Block Because of the user");
 
 				}
 				case true:{
