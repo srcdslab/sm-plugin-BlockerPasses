@@ -30,4 +30,383 @@
 		"pt"		"As passagens foram desbloqueadas!"
 		"chi"		"通道已解锁！"
 	}
+
+	"BP_Menu_Title"
+	{
+		"en"		"| English Blocker Passes |"
+		"fr"		"| Blocker Passes |"
+		"ru"		"| Blocker Passes |"
+		"es"		"| Blocker Passes |"
+		"de"		"| Blocker Passes |"
+		"pt"		"| Blocker Passes |"
+		"chi"		"| Blocker Passes |"
+	}
+
+	"BP_Menu_Props"
+	{
+		"en"		"Props Menu"
+		"fr"		"Menu des props"
+		"ru"		"Меню пропов"
+		"es"		"Menú de props"
+		"de"		"Props-Menü"
+		"pt"		"Menu de props"
+		"chi"		"道具菜单"
+	}
+
+	"BP_Menu_Colors"
+	{
+		"en"		"Colors Menu"
+		"fr"		"Menu des couleurs"
+		"ru"		"Меню цветов"
+		"es"		"Menú de colores"
+		"de"		"Farbmenü"
+		"pt"		"Menu de cores"
+		"chi"		"颜色菜单"
+	}
+
+	"BP_Menu_Quota"
+	{
+		"en"		"Quota Menu"
+		"fr"		"Menu des quotas"
+		"ru"		"Меню квот"
+		"es"		"Menú de cuotas"
+		"de"		"Quoten-Menü"
+		"pt"		"Menu de cotas"
+		"chi"		"人数配额菜单"
+	}
+
+	"BP_Save_Props"
+	{
+		"en"		"Save Props"
+		"fr"		"Sauvegarder les props"
+		"ru"		"Сохранить пропы"
+		"es"		"Guardar props"
+		"de"		"Props speichern"
+		"pt"		"Salvar props"
+		"chi"		"保存道具"
+	}
+
+	"BP_Menu_LoadAll"
+	{
+		"en"		"Load | All Props"
+		"fr"		"Charger | Tous les props"
+		"ru"		"Загрузить | Все пропы"
+		"es"		"Cargar | Todos los props"
+		"de"		"Laden | Alle Props"
+		"pt"		"Carregar | Todos os props"
+		"chi"		"加载 | 全部道具"
+	}
+
+	"BP_Menu_UnloadAll"
+	{
+		"en"		"UnLoad | All Props"
+		"fr"		"Décharger | Tous les props"
+		"ru"		"Выгрузить | Все пропы"
+		"es"		"Descargar | Todos los props"
+		"de"		"Entladen | Alle Props"
+		"pt"		"Descarregar | Todos os props"
+		"chi"		"卸载 | 全部道具"
+	}
+
+	"BP_Rotate_Title"
+	{
+		"en"		"| Rotate Menu |"
+		"fr"		"| Menu de rotation |"
+		"ru"		"| Меню вращения |"
+		"es"		"| Menú de rotación |"
+		"de"		"| Rotationsmenü |"
+		"pt"		"| Menu de rotação |"
+		"chi"		"| 旋转菜单 |"
+	}
+
+	"BP_Colors_Title"
+	{
+		"en"		"| Colors Menu |"
+		"fr"		"| Menu des couleurs |"
+		"ru"		"| Меню цветов |"
+		"es"		"| Menú de colores |"
+		"de"		"| Farbmenü |"
+		"pt"		"| Menu de cores |"
+		"chi"		"| 颜色菜单 |"
+	}
+
+	"BP_Quota_Title"
+	{
+		"en"		"| Quota Menu |"
+		"fr"		"| Menu des quotas |"
+		"ru"		"| Меню квот |"
+		"es"		"| Menú de cuotas |"
+		"de"		"| Quoten-Menü |"
+		"pt"		"| Menu de cotas |"
+		"chi"		"| 人数配额菜单 |"
+	}
+
+	"BP_Props_Title"
+	{
+		"en"		"| Props Menu |"
+		"fr"		"| Menu des props |"
+		"ru"		"| Меню пропов |"
+		"es"		"| Menú de props |"
+		"de"		"| Props-Menü |"
+		"pt"		"| Menu de props |"
+		"chi"		"| 道具菜单 |"
+	}
+
+	"BP_Color_Red"
+	{
+		"en"		"Red"
+		"fr"		"Rouge"
+		"ru"		"Красный"
+		"es"		"Rojo"
+		"de"		"Rot"
+		"pt"		"Vermelho"
+		"chi"		"红色"
+	}
+
+	"BP_Color_Green"
+	{
+		"en"		"Green"
+		"fr"		"Vert"
+		"ru"		"Зелёный"
+		"es"		"Verde"
+		"de"		"Grün"
+		"pt"		"Verde"
+		"chi"		"绿色"
+	}
+
+	"BP_Color_Blue"
+	{
+		"en"		"Blue"
+		"fr"		"Bleu"
+		"ru"		"Синий"
+		"es"		"Azul"
+		"de"		"Blau"
+		"pt"		"Azul"
+		"chi"		"蓝色"
+	}
+
+	"BP_Color_Yellow"
+	{
+		"en"		"Yellow"
+		"fr"		"Jaune"
+		"ru"		"Жёлтый"
+		"es"		"Amarillo"
+		"de"		"Gelb"
+		"pt"		"Amarelo"
+		"chi"		"黄色"
+	}
+
+	"BP_Color_Pink"
+	{
+		"en"		"Pink\n "
+		"fr"		"Rose\n "
+		"ru"		"Розовый\n "
+		"es"		"Rosa\n "
+		"de"		"Rosa\n "
+		"pt"		"Rosa\n "
+		"chi"		"粉色\n "
+	}
+
+	"BP_Color_Invisible25"
+	{
+		"en"		"Invisible (25%%)"
+		"fr"		"Invisible (25%%)"
+		"ru"		"Невидимый (25%%)"
+		"es"		"Invisible (25%%)"
+		"de"		"Unsichtbar (25%%)"
+		"pt"		"Invisível (25%%)"
+		"chi"		"隐形 (25%%)"
+	}
+
+	"BP_Color_Invisible100"
+	{
+		"en"		"Invisible (100%%)"
+		"fr"		"Invisible (100%%)"
+		"ru"		"Невидимый (100%%)"
+		"es"		"Invisible (100%%)"
+		"de"		"Unsichtbar (100%%)"
+		"pt"		"Invisível (100%%)"
+		"chi"		"隐形 (100%%)"
+	}
+
+	"BP_Rotate_Prop"
+	{
+		"en"		"[Rotate Prop]"
+		"fr"		"[Tourner le prop]"
+		"ru"		"[Повернуть проп]"
+		"es"		"[Rotar prop]"
+		"de"		"[Prop drehen]"
+		"pt"		"[Girar prop]"
+		"chi"		"[旋转道具]"
+	}
+
+	"BP_Remove_Prop"
+	{
+		"en"		"[Remove Prop]"
+		"fr"		"[Supprimer le prop]"
+		"ru"		"[Удалить проп]"
+		"es"		"[Eliminar prop]"
+		"de"		"[Prop entfernen]"
+		"pt"		"[Remover prop]"
+		"chi"		"[移除道具]"
+	}
+
+	"BP_Quota_Object"
+	{
+		"#format"	"{1:s}"
+		"en"		"The quota for this object: {1}"
+		"fr"		"Quota pour cet objet : {1}"
+		"ru"		"Квота для этого объекта: {1}"
+		"es"		"Cuota de este objeto: {1}"
+		"de"		"Quote für dieses Objekt: {1}"
+		"pt"		"Cota deste objeto: {1}"
+		"chi"		"该物体的人数配额：{1}"
+	}
+
+	"BP_Position"
+	{
+		"en"		"Position:"
+		"fr"		"Position :"
+		"ru"		"Позиция:"
+		"es"		"Posición:"
+		"de"		"Position:"
+		"pt"		"Posição:"
+		"chi"		"位置："
+	}
+
+	"BP_Category"
+	{
+		"en"		"[EN] Blocker Passes"
+		"fr"		"Blocker Passes"
+		"ru"		"Blocker Passes"
+		"es"		"Blocker Passes"
+		"de"		"Blocker Passes"
+		"pt"		"Blocker Passes"
+		"chi"		"Blocker Passes"
+	}
+
+	"BP_Settings"
+	{
+		"en"		"Settings"
+		"fr"		"Paramètres"
+		"ru"		"Настройки"
+		"es"		"Ajustes"
+		"de"		"Einstellungen"
+		"pt"		"Configurações"
+		"chi"		"设置"
+	}
+
+	"BP_Main_Menu"
+	{
+		"en"		"Main Menu"
+		"fr"		"Menu principal"
+		"ru"		"Главное меню"
+		"es"		"Menú principal"
+		"de"		"Hauptmenü"
+		"pt"		"Menu principal"
+		"chi"		"主菜单"
+	}
+
+	"BP_On"
+	{
+		"en"		"ON"
+		"fr"		"ON"
+		"ru"		"ВКЛ"
+		"es"		"ON"
+		"de"		"AN"
+		"pt"		"ON"
+		"chi"		"开"
+	}
+
+	"BP_Off"
+	{
+		"en"		"OFF"
+		"fr"		"OFF"
+		"ru"		"ВЫКЛ"
+		"es"		"OFF"
+		"de"		"AUS"
+		"pt"		"OFF"
+		"chi"		"关"
+	}
+
+	"BP_Setting_Enabled"
+	{
+		"#format"	"{1:s}"
+		"en"		"Plugin Enabled: {1}"
+		"fr"		"Plugin activé : {1}"
+		"ru"		"Плагин включён: {1}"
+		"es"		"Plugin activado: {1}"
+		"de"		"Plugin aktiviert: {1}"
+		"pt"		"Plugin ativado: {1}"
+		"chi"		"插件启用：{1}"
+	}
+
+	"BP_Setting_AccTeams"
+	{
+		"#format"	"{1:s}"
+		"en"		"Accounting For All Players: {1}"
+		"fr"		"Compter tous les joueurs : {1}"
+		"ru"		"Учитывать всех игроков: {1}"
+		"es"		"Contar a todos los jugadores: {1}"
+		"de"		"Alle Spieler zählen: {1}"
+		"pt"		"Contar todos os jogadores: {1}"
+		"chi"		"统计所有玩家：{1}"
+	}
+
+	"BP_Setting_Announce"
+	{
+		"#format"	"{1:s}"
+		"en"		"Plugin Announce: {1}"
+		"fr"		"Annonces du plugin : {1}"
+		"ru"		"Объявления плагина: {1}"
+		"es"		"Anuncios del plugin: {1}"
+		"de"		"Plugin-Ankündigungen: {1}"
+		"pt"		"Anúncios do plugin: {1}"
+		"chi"		"插件公告：{1}"
+	}
+
+	"BP_Prop_Removed"
+	{
+		"en"		"Prop removed!"
+		"fr"		"Prop supprimé !"
+		"ru"		"Проп удалён!"
+		"es"		"¡Prop eliminado!"
+		"de"		"Prop entfernt!"
+		"pt"		"Prop removido!"
+		"chi"		"道具已移除！"
+	}
+
+	"BP_Invalid_Object"
+	{
+		"en"		"Invalid object!"
+		"fr"		"Objet invalide !"
+		"ru"		"Неверный объект!"
+		"es"		"¡Objeto no válido!"
+		"de"		"Ungültiges Objekt!"
+		"pt"		"Objeto inválido!"
+		"chi"		"无效物体！"
+	}
+
+	"BP_Props_Installed"
+	{
+		"en"		"Props Successfully Installed!"
+		"fr"		"Props installés avec succès !"
+		"ru"		"Пропы успешно установлены!"
+		"es"		"¡Props colocados con éxito!"
+		"de"		"Props erfolgreich platziert!"
+		"pt"		"Props instalados com sucesso!"
+		"chi"		"道具放置成功！"
+	}
+
+	"BP_Positions_Saved"
+	{
+		"#format"	"{1:d}"
+		"en"		"Positions\nSuccessfully saved.\nTotal {1} Props!"
+		"fr"		"Positions\nsauvegardées avec succès.\nTotal : {1} props !"
+		"ru"		"Позиции\nуспешно сохранены.\nВсего пропов: {1}!"
+		"es"		"Posiciones\nguardadas con éxito.\n¡Total: {1} props!"
+		"de"		"Positionen\nerfolgreich gespeichert.\nInsgesamt {1} Props!"
+		"pt"		"Posições\nsalvas com sucesso.\nTotal: {1} props!"
+		"chi"		"位置\n保存成功。\n共 {1} 个道具！"
+	}
 }
