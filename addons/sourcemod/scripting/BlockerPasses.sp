@@ -70,7 +70,7 @@ public Plugin myinfo =
 	name = "Blocker passes",
 	author = ">>Satan<<",
 	description = "Blocker passes on maps",
-	version = "1.4.2",
+	version = "1.4.3",
 };
 
 public APLRes AskPluginLoad2(Handle myself, bool bLate, char[] sError, int Err_max)
@@ -83,7 +83,7 @@ public APLRes AskPluginLoad2(Handle myself, bool bLate, char[] sError, int Err_m
 public void OnPluginStart()
 {
 	#if UseAdminMenu
-		g_hETitleMenu = new Menu(MenuPropMenuHandler);
+		g_hETitleMenu = new Menu(MenuPropMenuHandler, MENU_ACTIONS_DEFAULT | MenuAction_Display | MenuAction_DisplayItem);
 		g_hETitleMenu.SetTitle("| English Blocker Passes |");
 		g_hETitleMenu.ExitBackButton = true;
 
@@ -95,7 +95,7 @@ public void OnPluginStart()
 		g_hETitleMenu.AddItem("LockAll", 	"Load | All Props");
 		g_hETitleMenu.AddItem("UnLockAll", 	"UnLoad | All Props");
 
-		g_hRoteMenu = new Menu(PropRoteMenuHandle);
+		g_hRoteMenu = new Menu(PropRoteMenuHandle, MENU_ACTIONS_DEFAULT | MenuAction_Display | MenuAction_DisplayItem);
 		g_hRoteMenu.SetTitle("| Rotate Menu |");
 		g_hRoteMenu.ExitBackButton = true;
 
@@ -106,7 +106,7 @@ public void OnPluginStart()
 		g_hRoteMenu.AddItem("RotateZ+45", "Rotate +45° on axis Z");
 		g_hRoteMenu.AddItem("RotateZ-45", "Rotate -45° on axis Z");
 
-		g_hColorMenu = new Menu(MenuPropColorHandler);
+		g_hColorMenu = new Menu(MenuPropColorHandler, MENU_ACTIONS_DEFAULT | MenuAction_Display | MenuAction_DisplayItem);
 		g_hColorMenu.SetTitle("| Colors Menu |");
 		g_hColorMenu.ExitBackButton = true;
 
@@ -119,7 +119,7 @@ public void OnPluginStart()
 		g_hColorMenu.AddItem("color7", "Invisible (25%)");
 		g_hColorMenu.AddItem("color8", "Invisible (100%)");
 
-		g_hQuotaMenu = new Menu(MenuPropQuotaHandler);
+		g_hQuotaMenu = new Menu(MenuPropQuotaHandler, MENU_ACTIONS_DEFAULT | MenuAction_Display);
 		g_hQuotaMenu.SetTitle("| Quota Menu |");
 		g_hQuotaMenu.ExitBackButton = true;
 
@@ -171,6 +171,7 @@ public void OnPluginStart()
 	#endif
 
 	AutoExecConfig(true);
+	LoadTranslations("common.phrases");
 	LoadTranslations("blocker_passes.phrases");
 
 	g_aDataProps = new ArrayList();
@@ -222,7 +223,7 @@ public void OnPostThink(int client)
 		{
 			char outBuffer[2][8];
 			ExplodeString(buffer, "_", outBuffer, 2, 16, false);
-			Format(sBuffer, sizeof(sBuffer), "The quota for this object: %s", outBuffer[1]);
+			Format(sBuffer, sizeof(sBuffer), "%T", "Quota HUD", client, outBuffer[1]);
 			PrintHudText(client, sBuffer);
 		}
 	}
@@ -247,7 +248,12 @@ void PreloadConfigs()
 #if UseAdminMenu
 	public Action CommandAdminPasses(int client, int args)
 	{
-		if (g_bUseAdminMenu) {
+		if (client == 0) {
+			ReplyToCommand(client, "%t", "Command is in-game only");
+			return Plugin_Handled;
+		}
+
+		if (g_bUseAdminMenu && g_hTopMenu != null) {
 			g_hTopMenu.Display(client, TopMenuPosition_LastCategory);
 		}
 
@@ -257,12 +263,15 @@ void PreloadConfigs()
 
 public Action CommandGetPoss(int client, int args)
 {
-	float g_fOrigin[3];
-	GetClientEyePosition(client, g_fOrigin);
+	if (client == 0) {
+		ReplyToCommand(client, "%t", "Command is in-game only");
+		return Plugin_Handled;
+	}
 
-	if (TR_DidHit(null)) {
-		TR_GetEndPosition(g_fOrigin, null);
-		PrintToChat(client, "\x04[SM]\x04 Position: \x01%-.1f\x04; \x01%-.1f\x04; \x01%-.1f\x04.", g_fOrigin[0], g_fOrigin[1], g_fOrigin[2]);
+	float g_fOrigin[3];
+
+	if (GetPlayerEye(client, g_fOrigin)) {
+		PrintToChat(client, "\x04[SM]\x04 %t \x01%-.1f\x04; \x01%-.1f\x04; \x01%-.1f\x04.", "Aim Position", g_fOrigin[0], g_fOrigin[1], g_fOrigin[2]);
 	}
 
 	return Plugin_Handled;
@@ -411,10 +420,10 @@ public void OnEntityDestroyed(int entity)
 	{
 		switch (action) {
 			case TopMenuAction_DisplayTitle:{
-				Format(buffer, maxlength, "[EN] Blocker Passes");
+				Format(buffer, maxlength, "%T", "Blocker Passes", param);
 			}
 			case TopMenuAction_DisplayOption:{
-				Format(buffer, maxlength, "[EN] Blocker Passes");
+				Format(buffer, maxlength, "%T", "Blocker Passes", param);
 			}
 		}
 	}
@@ -423,7 +432,7 @@ public void OnEntityDestroyed(int entity)
 	{
 		switch (action) {
 			case TopMenuAction_DisplayOption :{
-				Format(buffer, maxlength, "Settings");
+				Format(buffer, maxlength, "%T", "Settings", param);
 			}
 			case TopMenuAction_SelectOption :{
 				ShowSettingsMenu(param);
@@ -435,7 +444,7 @@ public void OnEntityDestroyed(int entity)
 	{
 		switch (action) {
 			case TopMenuAction_DisplayOption :{
-				Format(buffer, maxlength, "Main Menu");
+				Format(buffer, maxlength, "%T", "Main Menu", param);
 			}
 			case TopMenuAction_SelectOption :{
 				g_hETitleMenu.Display(param, MENU_TIME_FOREVER);
@@ -447,7 +456,7 @@ public void OnEntityDestroyed(int entity)
 	{
 		switch (action) {
 			case TopMenuAction_DisplayOption :{
-				Format(buffer, maxlength, "Save Props");
+				Format(buffer, maxlength, "%T", "Save Props", param);
 			}
 			case TopMenuAction_SelectOption :{
 				SaveAllProps(param);
@@ -457,19 +466,19 @@ public void OnEntityDestroyed(int entity)
 
 	void ShowSettingsMenu(int client)
 	{
-		char buffer[64];
+		char buffer[128];
 
 		Menu menu = new Menu(MenuSettingsHandler);
-		menu.SetTitle("Settings");
+		menu.SetTitle("%T", "Settings", client);
 		menu.ExitBackButton = true;
 
-		Format(buffer, sizeof(buffer), "Plugin Enabled: %s", g_bEnabled ? "ON" : "OFF");
+		Format(buffer, sizeof(buffer), "%T", g_bEnabled ? "Setting Plugin On" : "Setting Plugin Off", client);
 		menu.AddItem("Enable", buffer);
 
-		Format(buffer, sizeof(buffer), "Accounting For All Players: %s", g_bAccTeams ? "OFF" : "ON");
+		Format(buffer, sizeof(buffer), "%T", g_bAccTeams ? "Setting All Players Off" : "Setting All Players On", client);
 		menu.AddItem("Acc_Team", buffer);
 
-		Format(buffer, sizeof(buffer), "Plugin Announce: %s", g_bAnnounce ? "ON" : "OFF");
+		Format(buffer, sizeof(buffer), "%T", g_bAnnounce ? "Setting Announce On" : "Setting Announce Off", client);
 		menu.AddItem("Anonce", buffer);
 
 		menu.Display(client, MENU_TIME_FOREVER);
@@ -510,6 +519,33 @@ public void OnEntityDestroyed(int entity)
 	public int MenuPropMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action) {
+			case MenuAction_Display :{
+				char sTitle[128];
+				FormatEx(sTitle, sizeof(sTitle), "| %T |", "Blocker Passes", param1);
+				view_as<Panel>(param2).SetTitle(sTitle);
+			}
+			case MenuAction_DisplayItem :{
+				char sType[32], sDisplay[128];
+				menu.GetItem(param2, sType, sizeof(sType));
+
+				if (strcmp(sType, "PropsMenu", false) == 0) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Props Menu", param1);
+				} else if (strcmp(sType, "ColorMenu", false) == 0) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Colors Menu", param1);
+				} else if (strcmp(sType, "QuotaMenu", false) == 0) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Quota Menu", param1);
+				} else if (strcmp(sType, "SaveProps", false) == 0) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Save Props", param1);
+				} else if (strcmp(sType, "LockAll", false) == 0) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Load All Props", param1);
+				} else if (strcmp(sType, "UnLockAll", false) == 0) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Unload All Props", param1);
+				} else {
+					return 0;
+				}
+
+				return RedrawMenuItem(sDisplay);
+			}
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
 					if (g_hTopMenu != null)
@@ -555,6 +591,25 @@ public void OnEntityDestroyed(int entity)
 	public int PropMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action) {
+			case MenuAction_Display :{
+				char sTitle[128];
+				FormatEx(sTitle, sizeof(sTitle), "| %T |", "Props Menu", param1);
+				view_as<Panel>(param2).SetTitle(sTitle);
+			}
+			case MenuAction_DisplayItem :{
+				char info[64], sDisplay[128];
+				menu.GetItem(param2, info, sizeof(info));
+
+				if (!strcmp(info, "rote")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "[%T]", "Rotate Prop", param1);
+				} else if (!strcmp(info, "remove")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "[%T]", "Remove Prop", param1);
+				} else {
+					return 0;
+				}
+
+				return RedrawMenuItem(sDisplay);
+			}
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
 					g_hETitleMenu.Display(param1, MENU_TIME_FOREVER);
@@ -588,14 +643,14 @@ public void OnEntityDestroyed(int entity)
 							if ((index = g_aDataProps.FindValue(ent)) != -1) {
 								g_aDataProps.Erase(index);
 								DeleteProp(ent);
-								PrintHintText(param1, "Prop removed!");
+								PrintHintText(param1, "%t", "Prop Removed");
 							}
 						} else {
-							PrintToChat(param1, "\x05[SM Blocker Passes]\x01 Invalid object!");
+							PrintToChat(param1, "\x05[SM Blocker Passes]\x01 %t", "Invalid Object");
 						}
 					} else {
 						CreateEntity(g_fOrigin, g_fAngles, g_sPropList[index2], g_biMinPlayers);
-						PrintHintText(param1, "Props Successfully Installed!");
+						PrintHintText(param1, "%t", "Prop Installed");
 					}
 					menu.DisplayAt(param1, GetMenuSelectionPosition(), MENU_TIME_FOREVER);
 				}
@@ -608,6 +663,21 @@ public void OnEntityDestroyed(int entity)
 	public int PropRoteMenuHandle(Menu menu, MenuAction action, int client, int param2)
 	{
 		switch (action) {
+			case MenuAction_Display :{
+				char sTitle[128];
+				FormatEx(sTitle, sizeof(sTitle), "| %T |", "Rotate Menu", client);
+				view_as<Panel>(param2).SetTitle(sTitle);
+			}
+			case MenuAction_DisplayItem :{
+				// Item info is "Rotate<axis><angle>", e.g. "RotateX+45"
+				char info[64], sAxis[2], sDisplay[128];
+				menu.GetItem(param2, info, sizeof(info));
+
+				sAxis[0] = info[6];
+				FormatEx(sDisplay, sizeof(sDisplay), "%T", "Rotate Item", client, info[7], sAxis);
+
+				return RedrawMenuItem(sDisplay);
+			}
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
 					g_hPropsMenu.Display(client, MENU_TIME_FOREVER);
@@ -651,6 +721,37 @@ public void OnEntityDestroyed(int entity)
 	public int MenuPropColorHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action) {
+			case MenuAction_Display :{
+				char sTitle[128];
+				FormatEx(sTitle, sizeof(sTitle), "| %T |", "Colors Menu", param1);
+				view_as<Panel>(param2).SetTitle(sTitle);
+			}
+			case MenuAction_DisplayItem :{
+				char sType[10], sDisplay[128];
+				menu.GetItem(param2, sType, sizeof(sType));
+
+				if (!strcmp(sType, "color1")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Color Red", param1);
+				} else if (!strcmp(sType, "color2")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Color Green", param1);
+				} else if (!strcmp(sType, "color3")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Color Blue", param1);
+				} else if (!strcmp(sType, "color4")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Color Yellow", param1);
+				} else if (!strcmp(sType, "color5")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T", "Color Cyan", param1);
+				} else if (!strcmp(sType, "color6")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T\n ", "Color Pink", param1);
+				} else if (!strcmp(sType, "color7")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T (25%%)", "Color Invisible", param1);
+				} else if (!strcmp(sType, "color8")) {
+					FormatEx(sDisplay, sizeof(sDisplay), "%T (100%%)", "Color Invisible", param1);
+				} else {
+					return 0;
+				}
+
+				return RedrawMenuItem(sDisplay);
+			}
 			case MenuAction_Cancel :{
 				if (param2 == MenuCancel_ExitBack) {
 					if (g_hTopMenu != null) {
@@ -695,9 +796,16 @@ public void OnEntityDestroyed(int entity)
 	public int MenuPropQuotaHandler(Menu menu, MenuAction action, int param1, int param2)
 	{
 		switch (action) {
+			case MenuAction_Display :{
+				char sTitle[128];
+				FormatEx(sTitle, sizeof(sTitle), "| %T |", "Quota Menu", param1);
+				view_as<Panel>(param2).SetTitle(sTitle);
+			}
 			case MenuAction_Cancel :{
+				// The quota HUD is only for this menu: stop it however the menu closes
+				SDKUnhook(param1, SDKHook_PostThinkPost, OnPostThink);
+
 				if (param2 == MenuCancel_ExitBack) {
-					SDKUnhook(param1, SDKHook_PostThinkPost, OnPostThink);
 					g_hETitleMenu.Display(param1, MENU_TIME_FOREVER);
 				}
 			}
@@ -772,9 +880,9 @@ void SpawnBlocks(const int clients)
 					ReplaceString(s_text, sizeof(s_text), "{darkgreen}", "\x05", false);
 
 					#if UseMoreColors
-						CPrintToChatAll(s_text);
+						CPrintToChatAll("%s", s_text);
 					#else
-						PrintToChatAll(s_text);
+						PrintToChatAll("%s", s_text);
 					#endif
 				}
 
@@ -922,7 +1030,7 @@ void SaveAllProps(int client)
 	if (client == 0) {
 		return;
 	}
-	PrintHintText(client, "Positions\nSuccessfully saved.\nTotal %d Props!", index - 1);
+	PrintHintText(client, "%t", "Props Saved", index - 1);
 
 	#if UseAdminMenu
 		g_hTopMenu.Display(client, TopMenuPosition_LastCategory);
@@ -947,7 +1055,8 @@ void SaveAllProps(int client)
 
 	void LoadPropsMenu()
 	{
-		g_hPropsMenu = new Menu(PropMenuHandler);
+		delete g_hPropsMenu;
+		g_hPropsMenu = new Menu(PropMenuHandler, MENU_ACTIONS_DEFAULT | MenuAction_Display | MenuAction_DisplayItem);
 		g_hPropsMenu.SetTitle("| Props Menu |");
 		g_hPropsMenu.ExitButton = true;
 		g_hPropsMenu.ExitBackButton = true;

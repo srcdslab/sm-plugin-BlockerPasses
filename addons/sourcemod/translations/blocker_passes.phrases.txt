@@ -30,4 +30,327 @@
 		"pt"		"As passagens foram desbloqueadas!"
 		"chi"		"通道已解锁！"
 	}
+	"Quota HUD"
+	{
+		"#format"	"{1:s}"
+		"en"		"The quota for this object: {1}"
+		"ru"		"Квота для этого объекта: {1}"
+		"fr"		"Quota de cet objet : {1}"
+		"es"		"Cuota de este objeto: {1}"
+		"de"		"Quote für dieses Objekt: {1}"
+		"pt"		"Cota deste objeto: {1}"
+		"chi"		"该物体的人数配额：{1}"
+	}
+	"Aim Position"
+	{
+		"en"		"Position:"
+		"ru"		"Позиция:"
+		"fr"		"Position :"
+		"es"		"Posición:"
+		"de"		"Position:"
+		"pt"		"Posição:"
+		"chi"		"位置："
+	}
+	"Prop Removed"
+	{
+		"en"		"Prop removed!"
+		"ru"		"Проп удалён!"
+		"fr"		"Prop supprimé !"
+		"es"		"¡Prop eliminado!"
+		"de"		"Prop entfernt!"
+		"pt"		"Prop removido!"
+		"chi"		"道具已移除！"
+	}
+	"Invalid Object"
+	{
+		"en"		"Invalid object!"
+		"ru"		"Неверный объект!"
+		"fr"		"Objet invalide !"
+		"es"		"¡Objeto no válido!"
+		"de"		"Ungültiges Objekt!"
+		"pt"		"Objeto inválido!"
+		"chi"		"无效的物体！"
+	}
+	"Prop Installed"
+	{
+		"en"		"Props Successfully Installed!"
+		"ru"		"Проп успешно установлен!"
+		"fr"		"Prop installé avec succès !"
+		"es"		"¡Prop colocado correctamente!"
+		"de"		"Prop erfolgreich platziert!"
+		"pt"		"Prop instalado com sucesso!"
+		"chi"		"道具已成功放置！"
+	}
+	"Props Saved"
+	{
+		"#format"	"{1:d}"
+		"en"		"Positions\nSuccessfully saved.\nTotal {1} Props!"
+		"ru"		"Позиции\nуспешно сохранены.\nВсего пропов: {1}!"
+		"fr"		"Positions\nenregistrées avec succès.\nTotal : {1} props !"
+		"es"		"Posiciones\nguardadas correctamente.\n¡Total: {1} props!"
+		"de"		"Positionen\nerfolgreich gespeichert.\nInsgesamt {1} Props!"
+		"pt"		"Posições\nsalvas com sucesso.\nTotal de {1} props!"
+		"chi"		"位置\n已成功保存。\n共 {1} 个道具！"
+	}
+	"Blocker Passes"
+	{
+		"en"		"Blocker Passes"
+		"ru"		"Блокировка проходов"
+		"fr"		"Blocage des passages"
+		"es"		"Bloqueo de pasos"
+		"de"		"Durchgangssperren"
+		"pt"		"Bloqueio de passagens"
+		"chi"		"通道封锁"
+	}
+	"Settings"
+	{
+		"en"		"Settings"
+		"ru"		"Настройки"
+		"fr"		"Paramètres"
+		"es"		"Ajustes"
+		"de"		"Einstellungen"
+		"pt"		"Configurações"
+		"chi"		"设置"
+	}
+	"Main Menu"
+	{
+		"en"		"Main Menu"
+		"ru"		"Главное меню"
+		"fr"		"Menu principal"
+		"es"		"Menú principal"
+		"de"		"Hauptmenü"
+		"pt"		"Menu principal"
+		"chi"		"主菜单"
+	}
+	"Save Props"
+	{
+		"en"		"Save Props"
+		"ru"		"Сохранить пропы"
+		"fr"		"Enregistrer les props"
+		"es"		"Guardar props"
+		"de"		"Props speichern"
+		"pt"		"Salvar props"
+		"chi"		"保存道具"
+	}
+	"Props Menu"
+	{
+		"en"		"Props Menu"
+		"ru"		"Меню пропов"
+		"fr"		"Menu des props"
+		"es"		"Menú de props"
+		"de"		"Prop-Menü"
+		"pt"		"Menu de props"
+		"chi"		"道具菜单"
+	}
+	"Colors Menu"
+	{
+		"en"		"Colors Menu"
+		"ru"		"Меню цветов"
+		"fr"		"Menu des couleurs"
+		"es"		"Menú de colores"
+		"de"		"Farbmenü"
+		"pt"		"Menu de cores"
+		"chi"		"颜色菜单"
+	}
+	"Quota Menu"
+	{
+		"en"		"Quota Menu"
+		"ru"		"Меню квот"
+		"fr"		"Menu des quotas"
+		"es"		"Menú de cuotas"
+		"de"		"Quotenmenü"
+		"pt"		"Menu de cotas"
+		"chi"		"配额菜单"
+	}
+	"Rotate Menu"
+	{
+		"en"		"Rotate Menu"
+		"ru"		"Меню поворота"
+		"fr"		"Menu de rotation"
+		"es"		"Menú de rotación"
+		"de"		"Drehmenü"
+		"pt"		"Menu de rotação"
+		"chi"		"旋转菜单"
+	}
+	"Load All Props"
+	{
+		"en"		"Load | All Props"
+		"ru"		"Загрузить | Все пропы"
+		"fr"		"Charger | Tous les props"
+		"es"		"Cargar | Todos los props"
+		"de"		"Laden | Alle Props"
+		"pt"		"Carregar | Todos os props"
+		"chi"		"加载 | 所有道具"
+	}
+	"Unload All Props"
+	{
+		"en"		"UnLoad | All Props"
+		"ru"		"Убрать | Все пропы"
+		"fr"		"Retirer | Tous les props"
+		"es"		"Quitar | Todos los props"
+		"de"		"Entfernen | Alle Props"
+		"pt"		"Remover | Todos os props"
+		"chi"		"卸载 | 所有道具"
+	}
+	"Rotate Prop"
+	{
+		"en"		"Rotate Prop"
+		"ru"		"Повернуть проп"
+		"fr"		"Tourner le prop"
+		"es"		"Rotar prop"
+		"de"		"Prop drehen"
+		"pt"		"Girar prop"
+		"chi"		"旋转道具"
+	}
+	"Remove Prop"
+	{
+		"en"		"Remove Prop"
+		"ru"		"Удалить проп"
+		"fr"		"Supprimer le prop"
+		"es"		"Eliminar prop"
+		"de"		"Prop entfernen"
+		"pt"		"Remover prop"
+		"chi"		"移除道具"
+	}
+	"Rotate Item"
+	{
+		"#format"	"{1:s},{2:s}"
+		"en"		"Rotate {1}° on axis {2}"
+		"ru"		"Повернуть на {1}° по оси {2}"
+		"fr"		"Rotation de {1}° sur l'axe {2}"
+		"es"		"Rotar {1}° en el eje {2}"
+		"de"		"Um {1}° auf der {2}-Achse drehen"
+		"pt"		"Girar {1}° no eixo {2}"
+		"chi"		"绕{2}轴旋转{1}°"
+	}
+	"Color Red"
+	{
+		"en"		"Red"
+		"ru"		"Красный"
+		"fr"		"Rouge"
+		"es"		"Rojo"
+		"de"		"Rot"
+		"pt"		"Vermelho"
+		"chi"		"红色"
+	}
+	"Color Green"
+	{
+		"en"		"Green"
+		"ru"		"Зелёный"
+		"fr"		"Vert"
+		"es"		"Verde"
+		"de"		"Grün"
+		"pt"		"Verde"
+		"chi"		"绿色"
+	}
+	"Color Blue"
+	{
+		"en"		"Blue"
+		"ru"		"Синий"
+		"fr"		"Bleu"
+		"es"		"Azul"
+		"de"		"Blau"
+		"pt"		"Azul"
+		"chi"		"蓝色"
+	}
+	"Color Yellow"
+	{
+		"en"		"Yellow"
+		"ru"		"Жёлтый"
+		"fr"		"Jaune"
+		"es"		"Amarillo"
+		"de"		"Gelb"
+		"pt"		"Amarelo"
+		"chi"		"黄色"
+	}
+	"Color Cyan"
+	{
+		"en"		"Cyan"
+		"ru"		"Голубой"
+		"fr"		"Cyan"
+		"es"		"Cian"
+		"de"		"Cyan"
+		"pt"		"Ciano"
+		"chi"		"青色"
+	}
+	"Color Pink"
+	{
+		"en"		"Pink"
+		"ru"		"Розовый"
+		"fr"		"Rose"
+		"es"		"Rosa"
+		"de"		"Rosa"
+		"pt"		"Rosa"
+		"chi"		"粉色"
+	}
+	"Color Invisible"
+	{
+		"en"		"Invisible"
+		"ru"		"Невидимый"
+		"fr"		"Invisible"
+		"es"		"Invisible"
+		"de"		"Unsichtbar"
+		"pt"		"Invisível"
+		"chi"		"隐形"
+	}
+	"Setting Plugin On"
+	{
+		"en"		"Plugin Enabled: ON"
+		"ru"		"Плагин включён: ДА"
+		"fr"		"Plugin activé : OUI"
+		"es"		"Plugin activado: SÍ"
+		"de"		"Plugin aktiviert: AN"
+		"pt"		"Plugin ativado: SIM"
+		"chi"		"插件启用：开"
+	}
+	"Setting Plugin Off"
+	{
+		"en"		"Plugin Enabled: OFF"
+		"ru"		"Плагин включён: НЕТ"
+		"fr"		"Plugin activé : NON"
+		"es"		"Plugin activado: NO"
+		"de"		"Plugin aktiviert: AUS"
+		"pt"		"Plugin ativado: NÃO"
+		"chi"		"插件启用：关"
+	}
+	"Setting All Players On"
+	{
+		"en"		"Accounting For All Players: ON"
+		"ru"		"Учитывать всех игроков: ДА"
+		"fr"		"Compter tous les joueurs : OUI"
+		"es"		"Contar a todos los jugadores: SÍ"
+		"de"		"Alle Spieler zählen: AN"
+		"pt"		"Contar todos os jogadores: SIM"
+		"chi"		"统计所有玩家：开"
+	}
+	"Setting All Players Off"
+	{
+		"en"		"Accounting For All Players: OFF"
+		"ru"		"Учитывать всех игроков: НЕТ"
+		"fr"		"Compter tous les joueurs : NON"
+		"es"		"Contar a todos los jugadores: NO"
+		"de"		"Alle Spieler zählen: AUS"
+		"pt"		"Contar todos os jogadores: NÃO"
+		"chi"		"统计所有玩家：关"
+	}
+	"Setting Announce On"
+	{
+		"en"		"Plugin Announce: ON"
+		"ru"		"Объявления плагина: ДА"
+		"fr"		"Annonces du plugin : OUI"
+		"es"		"Anuncios del plugin: SÍ"
+		"de"		"Plugin-Ankündigungen: AN"
+		"pt"		"Anúncios do plugin: SIM"
+		"chi"		"插件公告：开"
+	}
+	"Setting Announce Off"
+	{
+		"en"		"Plugin Announce: OFF"
+		"ru"		"Объявления плагина: НЕТ"
+		"fr"		"Annonces du plugin : NON"
+		"es"		"Anuncios del plugin: NO"
+		"de"		"Plugin-Ankündigungen: AUS"
+		"pt"		"Anúncios do plugin: NÃO"
+		"chi"		"插件公告：关"
+	}
 }
