@@ -171,7 +171,6 @@ public void OnPluginStart()
 	#endif
 
 	AutoExecConfig(true);
-	LoadTranslations("common.phrases");
 	LoadTranslations("blocker_passes.phrases");
 
 	g_aDataProps = new ArrayList();
@@ -248,12 +247,7 @@ void PreloadConfigs()
 #if UseAdminMenu
 	public Action CommandAdminPasses(int client, int args)
 	{
-		if (client == 0) {
-			ReplyToCommand(client, "%t", "Command is in-game only");
-			return Plugin_Handled;
-		}
-
-		if (g_bUseAdminMenu && g_hTopMenu != null) {
+		if (g_bUseAdminMenu) {
 			g_hTopMenu.Display(client, TopMenuPosition_LastCategory);
 		}
 
@@ -263,14 +257,11 @@ void PreloadConfigs()
 
 public Action CommandGetPoss(int client, int args)
 {
-	if (client == 0) {
-		ReplyToCommand(client, "%t", "Command is in-game only");
-		return Plugin_Handled;
-	}
-
 	float g_fOrigin[3];
+	GetClientEyePosition(client, g_fOrigin);
 
-	if (GetPlayerEye(client, g_fOrigin)) {
+	if (TR_DidHit(null)) {
+		TR_GetEndPosition(g_fOrigin, null);
 		PrintToChat(client, "\x04[SM]\x04 %t \x01%-.1f\x04; \x01%-.1f\x04; \x01%-.1f\x04.", "Aim Position", g_fOrigin[0], g_fOrigin[1], g_fOrigin[2]);
 	}
 
@@ -802,10 +793,8 @@ public void OnEntityDestroyed(int entity)
 				view_as<Panel>(param2).SetTitle(sTitle);
 			}
 			case MenuAction_Cancel :{
-				// The quota HUD is only for this menu: stop it however the menu closes
-				SDKUnhook(param1, SDKHook_PostThinkPost, OnPostThink);
-
 				if (param2 == MenuCancel_ExitBack) {
+					SDKUnhook(param1, SDKHook_PostThinkPost, OnPostThink);
 					g_hETitleMenu.Display(param1, MENU_TIME_FOREVER);
 				}
 			}
@@ -880,9 +869,9 @@ void SpawnBlocks(const int clients)
 					ReplaceString(s_text, sizeof(s_text), "{darkgreen}", "\x05", false);
 
 					#if UseMoreColors
-						CPrintToChatAll("%s", s_text);
+						CPrintToChatAll(s_text);
 					#else
-						PrintToChatAll("%s", s_text);
+						PrintToChatAll(s_text);
 					#endif
 				}
 
@@ -1055,7 +1044,6 @@ void SaveAllProps(int client)
 
 	void LoadPropsMenu()
 	{
-		delete g_hPropsMenu;
 		g_hPropsMenu = new Menu(PropMenuHandler, MENU_ACTIONS_DEFAULT | MenuAction_Display | MenuAction_DisplayItem);
 		g_hPropsMenu.SetTitle("| Props Menu |");
 		g_hPropsMenu.ExitButton = true;
