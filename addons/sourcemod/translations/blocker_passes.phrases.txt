@@ -9,6 +9,12 @@
 		"de"		"Einige Durchgänge auf der Map sind wegen zu wenigen Spielern im Counter-Terrorist-Team blockiert!"
 		"pt"		"Algumas passagens do mapa estão bloqueadas por falta de jogadores no time contra-terrorista!"
 		"chi"		"由于反恐精英队伍人数不足，地图上的部分通道已被封锁！"
+		"pl"		"Niektóre przejścia na mapie są zablokowane z powodu braku graczy w drużynie antyterrorystów!"
+		"tr"		"Haritadaki bazı geçitler Counter-Terrorist takımında oyuncu olmadığı için kapatıldı!"
+		"it"		"Alcuni passaggi della mappa sono bloccati per mancanza di giocatori nella squadra dei Counter-Terrorist!"
+		"ua"		"Деякі проходи на мапі заблоковані через брак гравців у команді контр-терористів!"
+		"zho"		"由於反恐精英隊伍人數不足，地圖上的部分通道已被封鎖！"
+		"cze"		"Některé průchody na mapě jsou zablokované kvůli nedostatku hráčů v týmu Counter-Terrorists!"
 	}
 	"Block Because of the user"
 	{
@@ -19,6 +25,12 @@
 		"de"		"Einige Durchgänge auf der Map sind wegen zu wenigen Spielern blockiert!"
 		"pt"		"Algumas passagens do mapa estão bloqueadas por falta de jogadores!"
 		"chi"		"由于玩家人数不足，地图上的部分通道已被封锁！"
+		"pl"		"Niektóre przejścia na mapie są zablokowane z powodu braku graczy!"
+		"tr"		"Haritadaki bazı geçitler yeterli oyuncu olmadığı için kapatıldı!"
+		"it"		"Alcuni passaggi della mappa sono bloccati per mancanza di giocatori!"
+		"ua"		"Деякі проходи на мапі заблоковані через брак гравців!"
+		"zho"		"由於玩家人數不足，地圖上的部分通道已被封鎖！"
+		"cze"		"Některé průchody na mapě jsou zablokované kvůli nedostatku hráčů!"
 	}
 	"UnBlock B"
 	{
@@ -29,6 +41,12 @@
 		"de"		"Die Durchgänge sind freigegeben!"
 		"pt"		"As passagens foram desbloqueadas!"
 		"chi"		"通道已解锁！"
+		"pl"		"Przejścia zostały odblokowane!"
+		"tr"		"Geçitlerin kilidi açıldı!"
+		"it"		"I passaggi sono sbloccati!"
+		"ua"		"Проходи розблоковано!"
+		"zho"		"通道已解鎖！"
+		"cze"		"Průchody jsou odemčené!"
 	}
 	"Quota HUD"
 	{
@@ -40,6 +58,12 @@
 		"de"		"Quote für dieses Objekt: {1}"
 		"pt"		"Cota deste objeto: {1}"
 		"chi"		"该物体的人数配额：{1}"
+		"pl"		"Limit dla tego obiektu: {1}"
+		"tr"		"Bu nesne için kota: {1}"
+		"it"		"Quota per questo oggetto: {1}"
+		"ua"		"Квота для цього об'єкта: {1}"
+		"zho"		"該物體的人數配額：{1}"
+		"cze"		"Kvóta pro tento objekt: {1}"
 	}
 	"Aim Position"
 	{
@@ -50,6 +74,12 @@
 		"de"		"Position:"
 		"pt"		"Posição:"
 		"chi"		"位置："
+		"pl"		"Pozycja:"
+		"tr"		"Konum:"
+		"it"		"Posizione:"
+		"ua"		"Позиція:"
+		"zho"		"位置："
+		"cze"		"Pozice:"
 	}
 	"Prop Removed"
 	{
@@ -60,6 +90,12 @@
 		"de"		"Prop entfernt!"
 		"pt"		"Prop removido!"
 		"chi"		"道具已移除！"
+		"pl"		"Prop usunięty!"
+		"tr"		"Prop kaldırıldı!"
+		"it"		"Prop rimosso!"
+		"ua"		"Проп видалено!"
+		"zho"		"道具已移除！"
+		"cze"		"Prop odstraněn!"
 	}
 	"Invalid Object"
 	{
@@ -70,6 +106,12 @@
 		"de"		"Ungültiges Objekt!"
 		"pt"		"Objeto inválido!"
 		"chi"		"无效的物体！"
+		"pl"		"Nieprawidłowy obiekt!"
+		"tr"		"Geçersiz nesne!"
+		"it"		"Oggetto non valido!"
+		"ua"		"Недійсний об'єкт!"
+		"zho"		"無效的物體！"
+		"cze"		"Neplatný objekt!"
 	}
 	"Prop Installed"
 	{
@@ -80,6 +122,12 @@
 		"de"		"Prop erfolgreich platziert!"
 		"pt"		"Prop instalado com sucesso!"
 		"chi"		"道具已成功放置！"
+		"pl"		"Prop został pomyślnie umieszczony!"
+		"tr"		"Prop başarıyla yerleştirildi!"
+		"it"		"Prop installato con successo!"
+		"ua"		"Проп успішно встановлено!"
+		"zho"		"道具已成功放置！"
+		"cze"		"Prop byl úspěšně umístěn!"
 	}
 	"Props Saved"
 	{
@@ -91,6 +139,12 @@
 		"de"		"Positionen\nerfolgreich gespeichert.\nInsgesamt {1} Props!"
 		"pt"		"Posições\nsalvas com sucesso.\nTotal de {1} props!"
 		"chi"		"位置\n已成功保存。\n共 {1} 个道具！"
+		"pl"		"Pozycje\nzostały zapisane.\nŁącznie propów: {1}!"
+		"tr"		"Konumlar\nbaşarıyla kaydedildi.\nToplam {1} prop!"
+		"it"		"Posizioni\nsalvate con successo.\nTotale: {1} prop!"
+		"ua"		"Позиції\nуспішно збережено.\nУсього пропів: {1}!"
+		"zho"		"位置\n已成功儲存。\n共 {1} 個道具！"
+		"cze"		"Pozice\nbyly úspěšně uloženy.\nCelkem {1} propů!"
 	}
 	"Blocker Passes"
 	{
@@ -101,6 +155,12 @@
 		"de"		"Durchgangssperren"
 		"pt"		"Bloqueio de passagens"
 		"chi"		"通道封锁"
+		"pl"		"Blokada przejść"
+		"tr"		"Geçit Engelleme"
+		"it"		"Blocco dei passaggi"
+		"ua"		"Блокування проходів"
+		"zho"		"通道封鎖"
+		"cze"		"Blokování průchodů"
 	}
 	"Settings"
 	{
@@ -111,6 +171,12 @@
 		"de"		"Einstellungen"
 		"pt"		"Configurações"
 		"chi"		"设置"
+		"pl"		"Ustawienia"
+		"tr"		"Ayarlar"
+		"it"		"Impostazioni"
+		"ua"		"Налаштування"
+		"zho"		"設定"
+		"cze"		"Nastavení"
 	}
 	"Main Menu"
 	{
@@ -121,6 +187,12 @@
 		"de"		"Hauptmenü"
 		"pt"		"Menu principal"
 		"chi"		"主菜单"
+		"pl"		"Menu główne"
+		"tr"		"Ana Menü"
+		"it"		"Menu principale"
+		"ua"		"Головне меню"
+		"zho"		"主選單"
+		"cze"		"Hlavní menu"
 	}
 	"Save Props"
 	{
@@ -131,6 +203,12 @@
 		"de"		"Props speichern"
 		"pt"		"Salvar props"
 		"chi"		"保存道具"
+		"pl"		"Zapisz propy"
+		"tr"		"Propları kaydet"
+		"it"		"Salva i prop"
+		"ua"		"Зберегти пропи"
+		"zho"		"儲存道具"
+		"cze"		"Uložit propy"
 	}
 	"Props Menu"
 	{
@@ -141,6 +219,12 @@
 		"de"		"Prop-Menü"
 		"pt"		"Menu de props"
 		"chi"		"道具菜单"
+		"pl"		"Menu propów"
+		"tr"		"Prop Menüsü"
+		"it"		"Menu dei prop"
+		"ua"		"Меню пропів"
+		"zho"		"道具選單"
+		"cze"		"Menu propů"
 	}
 	"Colors Menu"
 	{
@@ -151,6 +235,12 @@
 		"de"		"Farbmenü"
 		"pt"		"Menu de cores"
 		"chi"		"颜色菜单"
+		"pl"		"Menu kolorów"
+		"tr"		"Renk Menüsü"
+		"it"		"Menu dei colori"
+		"ua"		"Меню кольорів"
+		"zho"		"顏色選單"
+		"cze"		"Menu barev"
 	}
 	"Quota Menu"
 	{
@@ -161,6 +251,12 @@
 		"de"		"Quotenmenü"
 		"pt"		"Menu de cotas"
 		"chi"		"配额菜单"
+		"pl"		"Menu limitów"
+		"tr"		"Kota Menüsü"
+		"it"		"Menu delle quote"
+		"ua"		"Меню квот"
+		"zho"		"配額選單"
+		"cze"		"Menu kvót"
 	}
 	"Rotate Menu"
 	{
@@ -171,6 +267,12 @@
 		"de"		"Drehmenü"
 		"pt"		"Menu de rotação"
 		"chi"		"旋转菜单"
+		"pl"		"Menu obrotu"
+		"tr"		"Döndürme Menüsü"
+		"it"		"Menu di rotazione"
+		"ua"		"Меню повороту"
+		"zho"		"旋轉選單"
+		"cze"		"Menu otáčení"
 	}
 	"Load All Props"
 	{
@@ -181,6 +283,12 @@
 		"de"		"Laden | Alle Props"
 		"pt"		"Carregar | Todos os props"
 		"chi"		"加载 | 所有道具"
+		"pl"		"Wczytaj | Wszystkie propy"
+		"tr"		"Yükle | Tüm propler"
+		"it"		"Carica | Tutti i prop"
+		"ua"		"Завантажити | Усі пропи"
+		"zho"		"載入 | 所有道具"
+		"cze"		"Načíst | Všechny propy"
 	}
 	"Unload All Props"
 	{
@@ -191,6 +299,12 @@
 		"de"		"Entfernen | Alle Props"
 		"pt"		"Remover | Todos os props"
 		"chi"		"卸载 | 所有道具"
+		"pl"		"Usuń | Wszystkie propy"
+		"tr"		"Kaldır | Tüm propler"
+		"it"		"Rimuovi | Tutti i prop"
+		"ua"		"Прибрати | Усі пропи"
+		"zho"		"卸載 | 所有道具"
+		"cze"		"Odebrat | Všechny propy"
 	}
 	"Rotate Prop"
 	{
@@ -201,6 +315,12 @@
 		"de"		"Prop drehen"
 		"pt"		"Girar prop"
 		"chi"		"旋转道具"
+		"pl"		"Obróć prop"
+		"tr"		"Propu döndür"
+		"it"		"Ruota il prop"
+		"ua"		"Повернути проп"
+		"zho"		"旋轉道具"
+		"cze"		"Otočit prop"
 	}
 	"Remove Prop"
 	{
@@ -211,6 +331,12 @@
 		"de"		"Prop entfernen"
 		"pt"		"Remover prop"
 		"chi"		"移除道具"
+		"pl"		"Usuń prop"
+		"tr"		"Propu kaldır"
+		"it"		"Rimuovi il prop"
+		"ua"		"Видалити проп"
+		"zho"		"移除道具"
+		"cze"		"Odstranit prop"
 	}
 	"Rotate Item"
 	{
@@ -222,6 +348,12 @@
 		"de"		"Um {1}° auf der {2}-Achse drehen"
 		"pt"		"Girar {1}° no eixo {2}"
 		"chi"		"绕{2}轴旋转{1}°"
+		"pl"		"Obróć o {1}° wokół osi {2}"
+		"tr"		"{2} ekseninde {1}° döndür"
+		"it"		"Ruota di {1}° sull'asse {2}"
+		"ua"		"Повернути на {1}° за віссю {2}"
+		"zho"		"繞{2}軸旋轉{1}°"
+		"cze"		"Otočit o {1}° kolem osy {2}"
 	}
 	"Color Red"
 	{
@@ -232,6 +364,12 @@
 		"de"		"Rot"
 		"pt"		"Vermelho"
 		"chi"		"红色"
+		"pl"		"Czerwony"
+		"tr"		"Kırmızı"
+		"it"		"Rosso"
+		"ua"		"Червоний"
+		"zho"		"紅色"
+		"cze"		"Červená"
 	}
 	"Color Green"
 	{
@@ -242,6 +380,12 @@
 		"de"		"Grün"
 		"pt"		"Verde"
 		"chi"		"绿色"
+		"pl"		"Zielony"
+		"tr"		"Yeşil"
+		"it"		"Verde"
+		"ua"		"Зелений"
+		"zho"		"綠色"
+		"cze"		"Zelená"
 	}
 	"Color Blue"
 	{
@@ -252,6 +396,12 @@
 		"de"		"Blau"
 		"pt"		"Azul"
 		"chi"		"蓝色"
+		"pl"		"Niebieski"
+		"tr"		"Mavi"
+		"it"		"Blu"
+		"ua"		"Синій"
+		"zho"		"藍色"
+		"cze"		"Modrá"
 	}
 	"Color Yellow"
 	{
@@ -262,6 +412,12 @@
 		"de"		"Gelb"
 		"pt"		"Amarelo"
 		"chi"		"黄色"
+		"pl"		"Żółty"
+		"tr"		"Sarı"
+		"it"		"Giallo"
+		"ua"		"Жовтий"
+		"zho"		"黃色"
+		"cze"		"Žlutá"
 	}
 	"Color Cyan"
 	{
@@ -272,6 +428,12 @@
 		"de"		"Cyan"
 		"pt"		"Ciano"
 		"chi"		"青色"
+		"pl"		"Cyjan"
+		"tr"		"Camgöbeği"
+		"it"		"Ciano"
+		"ua"		"Блакитний"
+		"zho"		"青色"
+		"cze"		"Azurová"
 	}
 	"Color Pink"
 	{
@@ -282,6 +444,12 @@
 		"de"		"Rosa"
 		"pt"		"Rosa"
 		"chi"		"粉色"
+		"pl"		"Różowy"
+		"tr"		"Pembe"
+		"it"		"Rosa"
+		"ua"		"Рожевий"
+		"zho"		"粉紅色"
+		"cze"		"Růžová"
 	}
 	"Color Invisible"
 	{
@@ -292,6 +460,12 @@
 		"de"		"Unsichtbar"
 		"pt"		"Invisível"
 		"chi"		"隐形"
+		"pl"		"Niewidzialny"
+		"tr"		"Görünmez"
+		"it"		"Invisibile"
+		"ua"		"Невидимий"
+		"zho"		"隱形"
+		"cze"		"Neviditelná"
 	}
 	"Setting Plugin On"
 	{
@@ -302,6 +476,12 @@
 		"de"		"Plugin aktiviert: AN"
 		"pt"		"Plugin ativado: SIM"
 		"chi"		"插件启用：开"
+		"pl"		"Plugin włączony: TAK"
+		"tr"		"Eklenti etkin: AÇIK"
+		"it"		"Plugin attivo: SÌ"
+		"ua"		"Плагін увімкнено: ТАК"
+		"zho"		"插件啟用：開"
+		"cze"		"Plugin zapnutý: ANO"
 	}
 	"Setting Plugin Off"
 	{
@@ -312,6 +492,12 @@
 		"de"		"Plugin aktiviert: AUS"
 		"pt"		"Plugin ativado: NÃO"
 		"chi"		"插件启用：关"
+		"pl"		"Plugin włączony: NIE"
+		"tr"		"Eklenti etkin: KAPALI"
+		"it"		"Plugin attivo: NO"
+		"ua"		"Плагін увімкнено: НІ"
+		"zho"		"插件啟用：關"
+		"cze"		"Plugin zapnutý: NE"
 	}
 	"Setting All Players On"
 	{
@@ -322,6 +508,12 @@
 		"de"		"Alle Spieler zählen: AN"
 		"pt"		"Contar todos os jogadores: SIM"
 		"chi"		"统计所有玩家：开"
+		"pl"		"Liczenie wszystkich graczy: TAK"
+		"tr"		"Tüm oyuncuları say: AÇIK"
+		"it"		"Conta tutti i giocatori: SÌ"
+		"ua"		"Враховувати всіх гравців: ТАК"
+		"zho"		"統計所有玩家：開"
+		"cze"		"Počítat všechny hráče: ANO"
 	}
 	"Setting All Players Off"
 	{
@@ -332,6 +524,12 @@
 		"de"		"Alle Spieler zählen: AUS"
 		"pt"		"Contar todos os jogadores: NÃO"
 		"chi"		"统计所有玩家：关"
+		"pl"		"Liczenie wszystkich graczy: NIE"
+		"tr"		"Tüm oyuncuları say: KAPALI"
+		"it"		"Conta tutti i giocatori: NO"
+		"ua"		"Враховувати всіх гравців: НІ"
+		"zho"		"統計所有玩家：關"
+		"cze"		"Počítat všechny hráče: NE"
 	}
 	"Setting Announce On"
 	{
@@ -342,6 +540,12 @@
 		"de"		"Plugin-Ankündigungen: AN"
 		"pt"		"Anúncios do plugin: SIM"
 		"chi"		"插件公告：开"
+		"pl"		"Ogłoszenia pluginu: TAK"
+		"tr"		"Eklenti duyuruları: AÇIK"
+		"it"		"Annunci del plugin: SÌ"
+		"ua"		"Оголошення плагіна: ТАК"
+		"zho"		"插件公告：開"
+		"cze"		"Oznámení pluginu: ANO"
 	}
 	"Setting Announce Off"
 	{
@@ -352,5 +556,11 @@
 		"de"		"Plugin-Ankündigungen: AUS"
 		"pt"		"Anúncios do plugin: NÃO"
 		"chi"		"插件公告：关"
+		"pl"		"Ogłoszenia pluginu: NIE"
+		"tr"		"Eklenti duyuruları: KAPALI"
+		"it"		"Annunci del plugin: NO"
+		"ua"		"Оголошення плагіна: НІ"
+		"zho"		"插件公告：關"
+		"cze"		"Oznámení pluginu: NE"
 	}
 }
